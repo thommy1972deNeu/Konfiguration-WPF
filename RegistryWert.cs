@@ -23,6 +23,20 @@ namespace Konfiguration_WPF
             return name;
         }
 
+
+        public static int CPU_BIT()
+        {
+            int Bit = 0;
+            ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
+            ManagementObjectCollection moc = cpu.Get();
+            foreach (ManagementObject mo in moc)
+            {
+                Bit = Convert.ToInt32(mo["AddressWidth"]);
+            }
+            cpu.Dispose();
+            return Bit;
+        }
+
         public static string SOCKET()
         {
             var Socket = String.Empty;
@@ -32,6 +46,7 @@ namespace Konfiguration_WPF
             {
                 Socket = mo["SocketDesignation"].ToString();
             }
+            cpu.Dispose();
             return Socket;
         }
 

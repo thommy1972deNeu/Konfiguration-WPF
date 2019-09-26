@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Konfiguration_WPF"
         mc:Ignorable="d"
-        Title="Konfigurationstool" Height="850" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Konfigurationstool" Height="900" Width="800" WindowStartupLocation="CenterScreen">
 
-    <Grid x:Name="Grid">
+    <Grid x:Name="Grid" Margin="0,0,0,28">
         
             <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -30,18 +30,20 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="648*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="189"/>
             <ColumnDefinition Width="19"/>
-            <ColumnDefinition Width="199"/>
-            <ColumnDefinition Width="404*"/>
+            <ColumnDefinition Width="139"/>
+            <ColumnDefinition Width="360"/>
+            <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
 
         <!-- ################## WERBUNG #########################-->
         <Image Source="https://www.zwpc.de/LogoKachel.jpg" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="5,25,0,0"/>
-        <Label Content="PC-Konfiguration" Grid.Row="0" Grid.Column="4" Margin="0,20,20,0" Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" HorizontalAlignment="Right" FontSize="34"/>
+        <Label Content="PC-Konfiguration" Grid.Row="0" Grid.Column="3" Margin="0,20,20,0" Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" HorizontalAlignment="Right" FontSize="34"/>
 
         <!-- ################ BUTTON definieren ##########################-->
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.RowSpan="6">
@@ -148,10 +150,21 @@
         <Border Grid.Row="18" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent" />
         <Border Grid.Row="18" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent" />
         <!--  #################     Windows Lizenznummer   **Row 19**    ###############################-->
-        <Label Grid.Row="19" Grid.Column="2" Content="Windows Lizenznummer:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Grid.Row="19" Grid.Column="2" Content="OS-Lizenz:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <Label Grid.Row="19" Grid.Column="3" x:Name="lbl_OS_Lizenznummer" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Border Grid.Row="19" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,1" Background="Transparent" />
-        <Border Grid.Row="19" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,1" Background="Transparent" />
+        <Border Grid.Row="19" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent" />
+
+        <!--  #################     Eigene Seriennummer  **Row 20**    ###############################-->
+        <Label Grid.Row="20" Grid.Column="2" Content="Eigene Serial:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Grid.Row="20" Grid.Column="3">
+            <TextBox Width="150" Height="25" x:Name="txt_eigene_serial" IsReadOnly="False" HorizontalAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="Enable" Margin="10,0,0,0" Click="Mach_An"/>
+        </StackPanel>
+
+        <Border Grid.Row="20" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent" />
+        <Border Grid.Row="20" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,1" Background="Transparent" />
+
 
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="792" Grid.ColumnSpan="4">
             <MenuItem Header="Datei">

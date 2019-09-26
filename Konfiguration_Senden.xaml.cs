@@ -192,7 +192,7 @@ namespace Konfiguration_WPF
             body += "Modell 1: " + RegistryWert.Modell1() + Environment.NewLine;
             body += "Modell 2: " + RegistryWert.Modell2() + Environment.NewLine;
             body += "Seriennummer: " + RegistryWert.SERIENNUMMER() + Environment.NewLine;
-            body += "Prozessor: " + RegistryWert.CPU_NAME() + Environment.NewLine;
+            body += "Prozessor: " + Environment.NewLine;
             body += "RAM-Total: " + RegistryWert.RAM_TOTAL() + " GB " + RegistryWert.RAM_TYP() + " @ " + RegistryWert.RAM_SPEED() + " MHz" + Environment.NewLine;
             body += "Grafikkarte: " + RegistryWert.GRAFIK1() + " @" + RegistryWert.GRAFIK1_RESOLUTION() + Environment.NewLine;
             body += "Mainboard: " + RegistryWert.MAINBOARD() + Environment.NewLine;
@@ -222,7 +222,7 @@ namespace Konfiguration_WPF
             {
                 Console.WriteLine("Exception caught in CreateTimeoutTestMessage(): {0}", ex.ToString());
             }
-
+            smtpClient.Dispose();
             this.Close();
         }
     }
