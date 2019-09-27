@@ -9,6 +9,7 @@ using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Konfiguration_WPF
 {
     class RegistryWert
@@ -25,16 +26,20 @@ namespace Konfiguration_WPF
             return key.ToString();
         }
 
+
+
         public static string Email_Passwort()
         {
             OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-            OleDbCommand cmd_key = new OleDbCommand("SELECT Email_Passwort FROM Config", con);
+            OleDbCommand cmd_key = new OleDbCommand("SELECT EncryptionKey FROM Config", con);
             con.Open();
             object key = cmd_key.ExecuteScalar();
             con.Close();
             cmd_key.Dispose();
             return key.ToString();
         }
+
+
 
         public static string CPU_NAME()
         {
@@ -49,6 +54,8 @@ namespace Konfiguration_WPF
         }
 
 
+
+
         public static int CPU_BIT()
         {
             int Bit = 0;
@@ -60,6 +67,19 @@ namespace Konfiguration_WPF
             }
             cpu.Dispose();
             return Bit;
+        }
+
+
+        public static string CPU_ID()
+        {
+            var ProzId = String.Empty;
+            ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
+            ManagementObjectCollection moc = cpu.Get();
+            foreach (ManagementObject mo in moc)
+            {
+                ProzId = mo["ProcessorId"].ToString();
+            }
+            return ProzId;
         }
 
         public static string SOCKET()

@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
+using Microsoft.Win32;
 
 namespace Konfiguration_WPF
 {
@@ -29,7 +30,29 @@ namespace Konfiguration_WPF
             HDD1();
             HDD2();
             HDD3();
+
+
+            // #############################################
+            // ########### Registry Wert eintragen #########
+            // #############################################
+            if (Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", null) == null)
+            {
+                RegistryKey key;
+                key = Registry.CurrentConfig.CreateSubKey("Computerservice Blasius Thomas");
+                key.SetValue("Serial", RegistryWert.SERIENNUMMER());
+                key.SetValue("Proz_ID", RegistryWert.CPU_ID());
+                key.SetValue("Datum", DateTime.Now);
+                key.Close();
+            } else
+            {
+                MessageBox.Show("Gerät ist bereits bei uns gewesen !" + Environment.NewLine + "Proz-ID: " + Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Proz_ID", true) + Environment.NewLine + Environment.NewLine + "Bitte Warten... Konfiguration wird geladen...", "Message", MessageBoxButton.OK);
+                Reg_Wert_Serial.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Serial", true);
+                Reg_Wert_Proz_ID.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Proz_ID", true);
+                Reg_Wert_Datum.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", true) + " Uhr";
+            }
             
+
+
             lbl_OS_Lizenznummer.Content = KeyDecoder.GetWindowsProductKeyFromRegistry();
             lbl_Prozessor.Content = RegistryWert.CPU_NAME() + " (" + RegistryWert.CPU_BIT() + " Bit)";
             lbl_Hersteller.Content = RegistryWert.Hersteller();
@@ -83,6 +106,34 @@ namespace Konfiguration_WPF
             }
         }
 
+        public string Entschluesseln(string strDecrypted)
+        {
+            try
+            {
+                string EncryptionKey = "test123456key";
+                byte[] cipherBytes = Convert.FromBase64String(strDecrypted);
+                using (Aes encryptor = Aes.Create())
+                {
+                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                    encryptor.Key = pdb.GetBytes(32);
+                    encryptor.IV = pdb.GetBytes(16);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(cipherBytes, 0, cipherBytes.Length);
+                            cs.Close();
+                        }
+                        strDecrypted = Encoding.Unicode.GetString(ms.ToArray());
+                    }
+                }
+                return strDecrypted;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
 
         public void SystemTyp()

@@ -32,6 +32,8 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="648*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -81,15 +83,15 @@
         <Border Grid.Row="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
         <Border Grid.Row="4" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
         <!--  #################     Seriennummer   **Row 5**    ###############################-->
-        <Label Grid.Row="5" Grid.Column="2" Content="Seriennummer:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="5" Grid.Column="3" x:Name="lbl_Seriennummer" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="5" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="5" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
+        <Label Grid.Row="5" Grid.Column="2" Content="Seriennummer:" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <Label Grid.Row="5" Grid.Column="3" x:Name="lbl_Seriennummer" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Border Grid.Row="5" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent" />
+        <Border Grid.Row="5" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent" />
         <!--  #################     Prozessor  **Row 6**    ###############################-->
-        <Label Grid.Row="6" Grid.Column="2" Content="Prozessor:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="6" Grid.Column="3" x:Name="lbl_Prozessor" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="6" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="6" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
+        <Label Grid.Row="6" Grid.Column="2" Content="Prozessor:" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <Label Grid.Row="6" Grid.Column="3" x:Name="lbl_Prozessor" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Border Grid.Row="6" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent" />
+        <Border Grid.Row="6" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent" />
         <!--  #################     RAM Total GB  **Row 7**    ###############################-->
         <Label Grid.Row="7" Grid.Column="2" Content="RAM-Total:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <Label Grid.Row="7" Grid.Column="3" x:Name="lbl_RAM_TOTAL" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -156,10 +158,21 @@
         <Border Grid.Row="19" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,1" Background="Transparent"/>
         <Border Grid.Row="19" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,1" Background="Transparent"/>
         <!--  #################     Eigene Serial   **Row 20**    ###############################-->
-        <Label Grid.Row="20" Grid.Column="2" Content="Eigene Serial:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="20" Grid.Column="3" x:Name="RegistryWert" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="20" Grid.Column="2" Background="LightGray"  Content="Reg Serial:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Grid.Row="20" Grid.Column="3" Background="LightGray"  x:Name="Reg_Wert_Serial" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Border Grid.Row="20" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
         <Border Grid.Row="20" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
+        <!--  #################     Eigene Serial   **Row 21**    ###############################-->
+        <Label Grid.Row="21" Grid.Column="2" Background="LightGray"  Content="Reg Proz-ID:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Grid.Row="21" Grid.Column="3" Background="LightGray"  x:Name="Reg_Wert_Proz_ID" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Border Grid.Row="21" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
+        <Border Grid.Row="21" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
+        <!--  #################     Eigene Serial   **Row 22**    ###############################-->
+        <Label Grid.Row="22" Grid.Column="2" Background="LightGray" Content="Reg Eintragungsdatum:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Grid.Row="22" Grid.Column="3" Background="LightGray" x:Name="Reg_Wert_Datum" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Border Grid.Row="22" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
+        <Border Grid.Row="22" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
+
 
 
 
