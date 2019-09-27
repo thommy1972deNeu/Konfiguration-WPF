@@ -1,4 +1,4 @@
-Dieses Tool dienst zum Auslesen der Computersepzifikationen.
+Dieses Tool dienst zum Auslesen diverser Computerspezifikationen.
 Es wird so angepasst, dass es zu unserem Tool "Reparaturen V6"
 https://github.com/thommy1972deNeu/Reparaturen_V6
 passt und die für mich relevanten Computerwerte an mich überträgt.
