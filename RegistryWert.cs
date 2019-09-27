@@ -2,6 +2,8 @@
 using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.OleDb;
 using System.Linq;
 using System.Management;
 using System.Text;
@@ -11,6 +13,29 @@ namespace Konfiguration_WPF
 {
     class RegistryWert
     {
+
+        public static string Encryption_Key()
+        {
+            OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+            OleDbCommand cmd_key = new OleDbCommand("SELECT EncryptionKey FROM Config", con);
+            con.Open();
+            object key = cmd_key.ExecuteScalar();
+            con.Close();
+            cmd_key.Dispose();
+            return key.ToString();
+        }
+
+        public static string Email_Passwort()
+        {
+            OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+            OleDbCommand cmd_key = new OleDbCommand("SELECT Email_Passwort FROM Config", con);
+            con.Open();
+            object key = cmd_key.ExecuteScalar();
+            con.Close();
+            cmd_key.Dispose();
+            return key.ToString();
+        }
+
         public static string CPU_NAME()
         {
             var name = String.Empty;

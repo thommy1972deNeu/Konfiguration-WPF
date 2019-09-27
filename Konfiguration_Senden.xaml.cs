@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -141,7 +143,34 @@ namespace Konfiguration_WPF
         }
 
 
-
+        public string Entschluesseln(string strDecrypted)
+        {
+            try
+            {
+                string EncryptionKey = RegistryWert.Encryption_Key();
+                byte[] cipherBytes = Convert.FromBase64String(strDecrypted);
+                using (Aes encryptor = Aes.Create())
+                {
+                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                    encryptor.Key = pdb.GetBytes(32);
+                    encryptor.IV = pdb.GetBytes(16);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(cipherBytes, 0, cipherBytes.Length);
+                            cs.Close();
+                        }
+                        strDecrypted = Encoding.Unicode.GetString(ms.ToArray());
+                    }
+                }
+                return strDecrypted;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
 
         private void absenden_2(object sender, RoutedEventArgs e)
@@ -164,23 +193,26 @@ namespace Konfiguration_WPF
                 return;
             }
 
-            if (zauberwort.Text != ConfigurationManager.AppSettings["GhZfrgWRGwr57456DGWferGF$ZG"].ToString())
-            {
-                MessageBox.Show("Falsches Passwort !", "Fehler", MessageBoxButton.OK);
-                zauberwort.Focus();
-                absenden.Visibility = Visibility.Visible;
-                return;
-            }
+            // ##################################################################################################### 
+            // ###################   Abfrage nach Passwort habe ich mal Deaktiviert ################################ 
+            // ##################################################################################################### 
 
-            
+            //if (zauberwort.Text != ConfigurationManager.AppSettings["GhZfrgWRGwr57456DGWferGF$ZG"].ToString())
+            //{
+            //  MessageBox.Show("Falsches Passwort !", "Fehler", MessageBoxButton.OK);
+            //  zauberwort.Focus();
+            //  absenden.Visibility = Visibility.Visible;
+            //  return;
+            //} 
 
-        
+
+
             string from = ConfigurationManager.AppSettings["email_von_an"].ToString();
             string to = ConfigurationManager.AppSettings["email_von_an"].ToString();
             int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
             string server = ConfigurationManager.AppSettings["email_Server"].ToString();
             string betreff = "Programm-Einstellungen";
-            string passwort = ConfigurationManager.AppSettings["passwort"].ToString();
+            string passwort = Entschluesseln(RegistryWert.Email_Passwort());
 
             string body = @"Rechner-Konfiguration" + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
@@ -205,6 +237,7 @@ namespace Konfiguration_WPF
             body += "Windows Version: " + RegistryWert.GetWindwosClientVersion() + Environment.NewLine;
             body += "Windows Lizenz: " + KeyDecoder.GetWindowsProductKeyFromRegistry() + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
+            body += "Key: " + Entschluesseln(RegistryWert.Email_Passwort());
 
 
 
@@ -220,7 +253,7 @@ namespace Konfiguration_WPF
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught in CreateTimeoutTestMessage(): {0}", ex.ToString());
+               MessageBox.Show("Exception caught in CreateTimeoutTestMessage():" + ex.ToString(), "Fehler", MessageBoxButton.OK);
             }
             smtpClient.Dispose();
             this.Close();

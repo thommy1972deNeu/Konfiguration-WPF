@@ -2,7 +2,10 @@
 using System;
 using System.Configuration;
 using System.Data.OleDb;
+using System.IO;
 using System.Management;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -42,15 +45,41 @@ namespace Konfiguration_WPF
             lbl_DVD1.Content = RegistryWert.LW1();
             lbl_DVD2.Content = RegistryWert.LW2();
             lbl_OS_Version.Content = RegistryWert.GetWindwosClientVersion();
-            txt_eigene_serial.Focus();
 
             // ######################################################################
             // ############### Letzte Eigene Serial eintragen !! ####################
             // ######################################################################
-            if (txt_eigene_serial.Text == "")
+
+
+        }
+
+        public string Verschluesseln(string strOriginal)
+        {
+            try
             {
-                txt_eigene_serial.Text = Letzte_Serial().ToString();
-                txt_eigene_serial.Visibility = Visibility.Hidden;
+
+                string EncryptionKey = RegistryWert.Encryption_Key();
+                byte[] clearBytes = Encoding.Unicode.GetBytes(strOriginal);
+                using (Aes encryptor = Aes.Create())
+                {
+                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                    encryptor.Key = pdb.GetBytes(32);
+                    encryptor.IV = pdb.GetBytes(16);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(clearBytes, 0, clearBytes.Length);
+                            cs.Close();
+                        }
+                        strOriginal = Convert.ToBase64String(ms.ToArray());
+                    }
+                }
+                return strOriginal;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 
@@ -121,7 +150,7 @@ namespace Konfiguration_WPF
 
         public static string SystemTyp_String()
         {
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+            ManagementObjectCollection.ManagementObjectEnumerator enumerator;
             using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_ComputerSystem"))
             {
                 enumerator = managementObjectSearcher.Get().GetEnumerator();
@@ -198,7 +227,7 @@ namespace Konfiguration_WPF
         {
             var HDD1 = String.Empty;
 
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+            ManagementObjectCollection.ManagementObjectEnumerator enumerator;
             using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_DiskDrive WHERE DeviceID LIKE '%DRIVE0'"))
             {
                 enumerator = managementObjectSearcher.Get().GetEnumerator();
@@ -284,7 +313,7 @@ namespace Konfiguration_WPF
         }
 
 
-        private void send_Mail(object sender, RoutedEventArgs e)
+        private void Send_Mail(object sender, RoutedEventArgs e)
         {
             Grid.Effect = new BlurEffect();
             Splash.Visibility = Visibility.Visible;
@@ -306,85 +335,66 @@ namespace Konfiguration_WPF
         }
 
 
-        private void In_Database(object sender, RoutedEventArgs e)
+        private async void In_Database(object sender, RoutedEventArgs e)
         {
-            if (txt_eigene_serial.Text == "")
-            {
-                MessageBox.Show("Die Eigene Seriennummer sollte doch Eingetragen werden !", "Fehler", MessageBoxButton.OK);
-                txt_eigene_serial.Focus();
-                return;
-            }
-                
-
-            OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-            int i = 0;
-            OleDbCommand cmd_suche = new OleDbCommand("SELECT * FROM Rechner WHERE Eigene_Serial = @E_Serial", con);
-            cmd_suche.Parameters.AddWithValue("@E_Serial", txt_eigene_serial.Text);
-            con.Open();
-            OleDbDataReader reader1 = cmd_suche.ExecuteReader();
-            while(reader1.Read())
-            {
-                i++;
-            }
-            con.Close();
-            reader1.Close();
-            if(i == 0)
-            {
-                OleDbCommand cmd = new OleDbCommand("INSERT INTO Rechner (Eigene_Serial, System_Art, KD_Nummer, CPU, CPU_Bit, Hersteller, Modell1, Modell2, HDD1, HDD2, HDD3, RAM_TYP, RAM_GB, RAM_SLOTS, RAM_SPEED, Seriennummer, Grafikkarte, GRAKA_Aufloesung, MB_Hersteller, MB_Modell, DVD1, DVD2, OS_Version, OS_Lizenz, Datum) VALUES (@Eigene_Serial, @System_Art, @KD_Nummer, @CPU, @CPU_Bit, @Hersteller, @Modell1, @Modell2, @HDD1, @HDD2, @HDD3, @RAM_TYP, @RAM_GB, @RAM_SLOTS, @RAM_SPEED, @Seriannummer, @Grafikkarte, @GRAKA_Aufloesung, @MB_Hersteller, @MB_Modell, @DVD1, @DVD2, @OS_Version, OS_Lizenz, Datum)", con);
-                cmd.Parameters.AddWithValue("@Eigene_Serial", txt_eigene_serial.Text);
-                cmd.Parameters.AddWithValue("@System_Art", SystemTyp_String());
-                cmd.Parameters.AddWithValue("@KD_Nummer", "1");
-                cmd.Parameters.AddWithValue("@CPU", RegistryWert.CPU_NAME());
-                cmd.Parameters.AddWithValue("@CPU_Bit", RegistryWert.CPU_BIT());
-                cmd.Parameters.AddWithValue("@Hersteller", RegistryWert.Hersteller());
-                cmd.Parameters.AddWithValue("@Modell1", RegistryWert.Modell1());
-                cmd.Parameters.AddWithValue("@Modell2", RegistryWert.Modell2());
-                cmd.Parameters.AddWithValue("@HDD1", HDD1_String());
-                cmd.Parameters.AddWithValue("@HDD2", HDD2_String());
-                cmd.Parameters.AddWithValue("@HDD3", HDD3_String());
-                cmd.Parameters.AddWithValue("@RAM_TYP", RegistryWert.RAM_TYP());
-                cmd.Parameters.AddWithValue("@RAM_GB", RegistryWert.RAM_TOTAL());
-                cmd.Parameters.AddWithValue("@RAM_SLOTS", RegistryWert.RAM_ANZ());
-                cmd.Parameters.AddWithValue("@RAM_SPEED", RegistryWert.RAM_SPEED());
-                cmd.Parameters.AddWithValue("@Seriennummer", RegistryWert.SERIENNUMMER());
-                cmd.Parameters.AddWithValue("@Grafikkarte", RegistryWert.GRAFIK1());
-                cmd.Parameters.AddWithValue("@GRAKA_Aufloesung", RegistryWert.GRAFIK1_RESOLUTION());
-                cmd.Parameters.AddWithValue("@MB_Hersteller", RegistryWert.Hersteller());
-                cmd.Parameters.AddWithValue("@MB_Modell", RegistryWert.Modell1());
-                cmd.Parameters.AddWithValue("@DVD1", RegistryWert.LW1());
-                cmd.Parameters.AddWithValue("@DVD2", RegistryWert.LW2());
-                cmd.Parameters.AddWithValue("@OS_Version", RegistryWert.GetWindwosClientVersion());
-                cmd.Parameters.AddWithValue("@OS_Lizenz", KeyDecoder.GetWindowsProductKeyFromRegistry());
-                cmd.Parameters.AddWithValue("@Datum", DateTime.Now.Day + "." + DateTime.Now.Month + "."+ DateTime.Now.Year);
-
-                con.Open();
                 try
                 {
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Daten wurden eingetragen !", "Erfolgreich", MessageBoxButton.OK);
-                }
-                catch (Exception ex)
+
+                OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                int i = 0;
+                OleDbCommand cmd_suche = new OleDbCommand("SELECT * FROM Rechner WHERE Seriennummer = @snummer", con);
+                cmd_suche.Parameters.AddWithValue("@snummer", lbl_Seriennummer.Content);
+                con.Open();
+                OleDbDataReader reader1 = cmd_suche.ExecuteReader();
+                while(reader1.Read())
                 {
-                    MessageBox.Show("Fehler beim Eintragen der Dateien: " + ex.ToString(), "Fehlermeldung !", MessageBoxButton.OK);
+                    i++;
                 }
-                cmd.Dispose();
+                cmd_suche.Dispose();
                 con.Close();
-            } else
-            {
-                
-                MessageBox.Show("Die Eigene Seriennummer wird bereits Verwendet !", "Fehler", MessageBoxButton.OK);
-                txt_eigene_serial.Focus();
-                txt_eigene_serial.Text = Letzte_Serial().ToString();
+                reader1.Close();
 
+                if (i == 0)
+                {
+                    OleDbCommand cmd = new OleDbCommand("INSERT INTO Rechner (System_Art, KD_Nummer, CPU, CPU_Bit, Hersteller, Modell1, Modell2, HDD1, HDD2, HDD3, RAM_TYP, RAM_GB, RAM_SLOTS, RAM_SPEED, Seriennummer, Grafikkarte, GRAKA_Aufloesung, MB_Hersteller, MB_Modell, DVD1, DVD2, OS_Version, OS_Lizenz, Datum) VALUES (@System_Art, @KD_Nummer, @CPU, @CPU_Bit, @Hersteller, @Modell1, @Modell2, @HDD1, @HDD2, @HDD3, @RAM_TYP, @RAM_GB, @RAM_SLOTS, @RAM_SPEED, @Seriannummer, @Grafikkarte, @GRAKA_Aufloesung, @MB_Hersteller, @MB_Modell, @DVD1, @DVD2, @OS_Version, OS_Lizenz, Datum)", con);
 
-            }
+                    cmd.Parameters.AddWithValue("@System_Art", SystemTyp_String());
+                    cmd.Parameters.AddWithValue("@KD_Nummer", "1");
+                    cmd.Parameters.AddWithValue("@CPU", RegistryWert.CPU_NAME());
+                    cmd.Parameters.AddWithValue("@CPU_Bit", RegistryWert.CPU_BIT());
+                    cmd.Parameters.AddWithValue("@Hersteller", RegistryWert.Hersteller());
+                    cmd.Parameters.AddWithValue("@Modell1", RegistryWert.Modell1());
+                    cmd.Parameters.AddWithValue("@Modell2", RegistryWert.Modell2());
+                    cmd.Parameters.AddWithValue("@HDD1", HDD1_String());
+                    cmd.Parameters.AddWithValue("@HDD2", HDD2_String());
+                    cmd.Parameters.AddWithValue("@HDD3", HDD3_String());
+                    cmd.Parameters.AddWithValue("@RAM_TYP", RegistryWert.RAM_TYP());
+                    cmd.Parameters.AddWithValue("@RAM_GB", RegistryWert.RAM_TOTAL());
+                    cmd.Parameters.AddWithValue("@RAM_SLOTS", RegistryWert.RAM_ANZ());
+                    cmd.Parameters.AddWithValue("@RAM_SPEED", RegistryWert.RAM_SPEED());
+                    cmd.Parameters.AddWithValue("@Seriennummer", RegistryWert.SERIENNUMMER());
+                    cmd.Parameters.AddWithValue("@Grafikkarte", RegistryWert.GRAFIK1());
+                    cmd.Parameters.AddWithValue("@GRAKA_Aufloesung", RegistryWert.GRAFIK1_RESOLUTION());
+                    cmd.Parameters.AddWithValue("@MB_Hersteller", RegistryWert.Hersteller());
+                    cmd.Parameters.AddWithValue("@MB_Modell", RegistryWert.Modell1());
+                    cmd.Parameters.AddWithValue("@DVD1", RegistryWert.LW1());
+                    cmd.Parameters.AddWithValue("@DVD2", RegistryWert.LW2());
+                    cmd.Parameters.AddWithValue("@OS_Version", RegistryWert.GetWindwosClientVersion());
+                    cmd.Parameters.AddWithValue("@OS_Lizenz", KeyDecoder.GetWindowsProductKeyFromRegistry());
+                    cmd.Parameters.AddWithValue("@Datum", DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year);
 
+                    await con.OpenAsync();
+                    await cmd.ExecuteNonQueryAsync();
+                    MessageBox.Show("Daten wurden eingetragen !", "Erfolgreich", MessageBoxButton.OK);
+                    cmd.Dispose();
+                    con.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Die Seriennummer wird bereits Verwendet !", "Fehler", MessageBoxButton.OK);
+                }
 
-
-
-
-
-           
+            } catch { }
 
         }
 
@@ -393,10 +403,6 @@ namespace Konfiguration_WPF
         
         }
 
-        private void Mach_An(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 
 

@@ -34,9 +34,9 @@
                 <ComboBoxItem Content="Sophos Home Premium"/>
                 <ComboBoxItem Content="Sonstiges"/>
             </ComboBox>
-            
-            <Label Content="Wie ist das Zauberwort ?" HorizontalAlignment="Center" FontSize="12"/>
-            <TextBox Margin="0,0,0,20" x:Name="zauberwort" Width="200" Padding="5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="12"/>
+            <!-- ####################  Abfrage Deaktiviert 27.9.19 Thommy ################################# -->
+            <!--<Label Content="Wie ist das Zauberwort ?" HorizontalAlignment="Center" FontSize="12"/> -->
+            <!-- <TextBox Margin="0,0,0,20" x:Name="zauberwort" Width="200" Padding="5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="12"/> -->
             <Separator/>
             <Button x:Name="absenden" Width="200" Margin="20" Padding="10" FontFamily="Fixedsys" Content="Schick mir das Zeug, Junge !" Click="absenden_2"/>
         </StackPanel>
