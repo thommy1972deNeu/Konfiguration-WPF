@@ -15,3 +15,7 @@ P.S:
 Mir ist bewusst, dass es sich nicht um perfekten Code handelt und man an vielen Stellen, den Code ändern könnte.
 Bitte Verzichtet demnach auf diesbezügliche Kommentare.
 Besten Dank.
+
+Frühe Alpha Version:
+
+<center><img src="https://www.zwpc.de/Alpha_1.png" /></center>
