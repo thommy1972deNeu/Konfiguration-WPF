@@ -31,7 +31,7 @@ namespace Konfiguration_WPF
         public static string Email_Passwort()
         {
             OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-            OleDbCommand cmd_key = new OleDbCommand("SELECT EncryptionKey FROM Config", con);
+            OleDbCommand cmd_key = new OleDbCommand("SELECT Email_Passwort FROM Config", con);
             con.Open();
             object key = cmd_key.ExecuteScalar();
             con.Close();
