@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
 using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace Konfiguration_WPF
 {
@@ -451,7 +452,13 @@ namespace Konfiguration_WPF
 
         private void MSConfig_oeffnen(object sender, RoutedEventArgs e)
         {
-        
+            if(System.IO.File.Exists(Environment.SystemDirectory + "msconfig.exe"))
+            {
+                MessageBox.Show("Existent", "Jip", MessageBoxButton.OK);
+            } else
+            {
+                MessageBox.Show("Nicht da", "Fehler", MessageBoxButton.OK);
+            }
         }
 
     }
