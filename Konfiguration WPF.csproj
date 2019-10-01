@@ -101,12 +101,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cryption.cs" />
-    <Compile Include="Konfiguration_Senden.xaml.cs">
-      <DependentUpon>Konfiguration_Senden.xaml</DependentUpon>
+    <Compile Include="ConfiguratorViewModel.cs" />
+    <Compile Include="Cryptography.cs" />
+    <Compile Include="SendConfigurationWindow.xaml.cs">
+      <DependentUpon>SendConfigurationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RegistryWert.cs" />
-    <Page Include="Konfiguration_Senden.xaml">
+    <Compile Include="SystemInformation.cs" />
+    <Page Include="SendConfigurationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,7 +170,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Bilder\icons8-tv-show-64.png" />
+    <Resource Include="Images\computerServiceLogo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\icons8-tv-show-64.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
