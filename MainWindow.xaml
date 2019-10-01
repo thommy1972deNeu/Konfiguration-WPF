@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Konfiguration_WPF"
         mc:Ignorable="d"
-        Title="Konfigurationstool" Height="900" Width="800" WindowStartupLocation="CenterScreen">
+        x:Name="Self"
+        Title="Konfigurationstool" 
+        Height="900" Width="800" 
+        WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="Grid" Margin="0,0,0,28">
         
@@ -45,46 +47,93 @@
         </Grid.ColumnDefinitions>
 
         <!-- ################## WERBUNG #########################-->
-        <Image Source="https://www.zwpc.de/LogoKachel.jpg" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="5,25,0,0"/>
-        <Label Content="PC-Konfiguration" Grid.Row="0" Grid.Column="3" Margin="0,20,20,0" Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" HorizontalAlignment="Right" FontSize="34"/>
+        <Image  Grid.ColumnSpan="2" 
+                VerticalAlignment="Top" Margin="5,25,0,0"
+                Source="pack://application:,,,/Konfiguration WPF;component/Images/computerServiceLogo.jpg"/>
+      
+        <Label Grid.Row="0" Grid.Column="3" 
+               Margin="0,20,20,0" HorizontalAlignment="Right"
+               Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" FontSize="34"
+               Content="PC-Konfiguration" />
 
         <!-- ################ BUTTON definieren ##########################-->
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.RowSpan="6">
-            <Button x:Name="Email_Senden" Width="150" Height="30" Content="Email senden" Click="Send_Mail"/>
-            <Button x:Name="In_Datenbank" Width="150" Height="30" Content="In Datenbank" Margin="0,5,0,0" Click="In_Database"/>
-            <Button x:Name="MSCONFIG" Width="150" Height="30" Margin="0,5,0,0" Click="MSConfig_oeffnen">
+        <StackPanel  Grid.Row="1" Grid.Column="0" Grid.RowSpan="6"
+                     Orientation="Vertical">
+          
+            <Button x:Name="btn_OpenSendConfigurationWindow" 
+                    Width="150" Height="30" 
+                    Content="Email senden" 
+                    Click="OpenSendConfigurationWindow"/>
+          
+            <Button x:Name="btn_InDatabase" 
+                    Width="150" Height="30" Margin="0,5,0,0" 
+                    Content="In Datenbank"  
+                    Click="In_Database"/>
+          
+            <Button x:Name="btn_OpenMsConfig" 
+                    Width="150" Height="30" Margin="0,5,0,0" 
+                    Click="OpenMsConfigClick">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="Bilder\icons8-tv-show-64.png" Width="24"/>
-                    <TextBlock Text="MSCONFIG starten" Margin="5"/>
+                    <Image Width="24" Source="pack://application:,,,/Konfiguration WPF;component/Images/icons8-tv-show-64.png"/>
+                    <TextBlock  Margin="5"
+                                Text="MSCONFIG starten"/>
                 </StackPanel>
             </Button>
+          
         </StackPanel>
         
 
         <!--  #################    Geräte-Art   **Row 1**    ###############################-->
-        <Label Grid.Row="1" Grid.Column="2" Content="Geräte-Art :" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="1" Grid.Column="3" x:Name="lbl_Geraete_Art" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="2" 
+               VerticalAlignment="Center" HorizontalAlignment="Right"
+               Content="Geräte-Art :" />
+
+        <Label x:Name="lbl_Geraete_Art" 
+               Grid.Row="1" Grid.Column="3" 
+               HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
         <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
         <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
 
         <!--  #################     Hersteller   **Row 2**    ###############################-->
-        <Label Grid.Row="2" Grid.Column="2" Content="Hersteller:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="2" Grid.Column="3" x:Name="lbl_Hersteller" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="2"  
+               VerticalAlignment="Center" HorizontalAlignment="Right"
+               Content="Hersteller:"/>
+
+        <Label x:Name="lbl_Hersteller"
+               Grid.Row="2" Grid.Column="3" 
+               HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        
         <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
         <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
+        
         <!--  #################     Modell 1   **Row 3**    ###############################-->
-        <Label Grid.Row="3" Grid.Column="2" Content="Modell 1:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="3" Grid.Column="3" x:Name="lbl_Modell1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="2" 
+               VerticalAlignment="Center" HorizontalAlignment="Right"
+               Content="Modell 1:" />
+
+        <Label x:Name="lbl_Modell1"
+               Grid.Row="3" Grid.Column="3"  
+               HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
         <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
         <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
+
         <!--  #################     Modell 2   **Row 4**    ###############################-->
-        <Label Grid.Row="4" Grid.Column="2" Content="Modell 2:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="4" Grid.Column="3" x:Name="lbl_Modell2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="4" Grid.Column="2" Content="Modell 2:" 
+               VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Grid.Row="4" Grid.Column="3" x:Name="lbl_Modell2" 
+               HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
         <Border Grid.Row="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
         <Border Grid.Row="4" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
         <!--  #################     Seriennummer   **Row 5**    ###############################-->
-        <Label Grid.Row="5" Grid.Column="2" Content="Seriennummer:" VerticalAlignment="Center" HorizontalAlignment="Right" />
-        <Label Grid.Row="5" Grid.Column="3" x:Name="lbl_Seriennummer" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Label Grid.Row="5" Grid.Column="2" Content="Seriennummer:" 
+               VerticalAlignment="Center" HorizontalAlignment="Right" />
+
+        <Label Grid.Row="5" Grid.Column="3" x:Name="lbl_Seriennummer" 
+               HorizontalAlignment="Left" VerticalAlignment="Center" />
+
         <Border Grid.Row="5" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent" />
         <Border Grid.Row="5" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent" />
         <!--  #################     Prozessor  **Row 6**    ###############################-->
@@ -163,23 +212,44 @@
         <Border Grid.Row="20" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
         <Border Grid.Row="20" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
         <!--  #################     Eigene Serial   **Row 21**    ###############################-->
-        <Label Grid.Row="21" Grid.Column="2" Background="LightGray"  Content="Reg Proz-ID:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="21" Grid.Column="3" Background="LightGray"  x:Name="Reg_Wert_Proz_ID" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="21" Grid.Column="2" 
+               VerticalAlignment="Center" HorizontalAlignment="Right"
+               Background="LightGray"  
+               Content="Reg Proz-ID:" />
+
+        <Label x:Name="Reg_Wert_Proz_ID"
+               Grid.Row="21" Grid.Column="3" 
+               HorizontalAlignment="Left" VerticalAlignment="Center"
+               Background="LightGray" />
+        
         <Border Grid.Row="21" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
         <Border Grid.Row="21" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
+        
         <!--  #################     Eigene Serial   **Row 22**    ###############################-->
-        <Label Grid.Row="22" Grid.Column="2" Background="LightGray" Content="Reg Eintragungsdatum:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="22" Grid.Column="3" Background="LightGray" x:Name="Reg_Wert_Datum" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="22" Grid.Column="2" 
+               VerticalAlignment="Center" HorizontalAlignment="Right"
+               Background="LightGray" 
+               Content="Reg Eintragungsdatum:" />
+
+        <Label x:Name="Reg_Wert_Datum"
+               Grid.Row="22" Grid.Column="3" 
+               HorizontalAlignment="Left" VerticalAlignment="Center"
+               Background="LightGray"/>
+
         <Border Grid.Row="22" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
         <Border Grid.Row="22" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
 
 
 
 
-        <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="792" Grid.ColumnSpan="4">
+        <Menu x:Name="menu"
+              Grid.ColumnSpan="4"
+              Height="20" Width="792"
+              HorizontalAlignment="Left"  VerticalAlignment="Top">
+
             <MenuItem Header="Datei">
                 <MenuItem Header="Bearbeiten"/>
-                <MenuItem Header="Kopieren"/>
+                <MenuItem Header="Kopieren" />
                 <MenuItem Header="Speichern"/>
             </MenuItem>
 

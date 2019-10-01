@@ -15,22 +15,28 @@ namespace Konfiguration_WPF
     {
         public static string GetWindowsProductKeyFromRegistry()
         {
-            var localKey =
-                RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem
-                    ? RegistryView.Registry64
-                    : RegistryView.Registry32);
+            byte[] digitalProductId;
+            var registryView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64
+                                                                  : RegistryView.Registry32;
 
-            var registryKeyValue = localKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion")?.GetValue("DigitalProductId");
-            if (registryKeyValue == null)
-                return "Failed to get DigitalProductId from registry";
-            var digitalProductId = (byte[])registryKeyValue;
-            localKey.Close();
-            var isWin8OrUp =
-                Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor >= 2
-                ||
-                Environment.OSVersion.Version.Major > 6;
-            return GetWindowsProductKeyFromDigitalProductId(digitalProductId,
-                isWin8OrUp ? DigitalProductIdVersion.Windows8AndUp : DigitalProductIdVersion.UpToWindows7);
+            using (var localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
+            {
+                var digitalProductIdValue = localKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion")?.GetValue("DigitalProductId");
+
+                if (digitalProductIdValue == null)
+                    return "Failed to get DigitalProductId from registry";
+
+                digitalProductId = (byte[]) digitalProductIdValue;
+                localKey.Close();
+            }
+
+            var isWin8OrUp = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor >= 2 ||
+                             Environment.OSVersion.Version.Major > 6;
+
+            var digitalProductIdVersion = isWin8OrUp ? DigitalProductIdVersion.Windows8AndUp 
+                                                     : DigitalProductIdVersion.UpToWindows7;
+
+            return GetWindowsProductKeyFromDigitalProductId(digitalProductId, digitalProductIdVersion);
         }
 
         /// <summary>
@@ -42,10 +48,8 @@ namespace Konfiguration_WPF
         public static string GetWindowsProductKeyFromDigitalProductId(byte[] digitalProductId, DigitalProductIdVersion digitalProductIdVersion)
         {
 
-            var productKey = digitalProductIdVersion == DigitalProductIdVersion.Windows8AndUp
-                ? DecodeProductKeyWin8AndUp(digitalProductId)
-                : DecodeProductKey(digitalProductId);
-            return productKey;
+            return digitalProductIdVersion == DigitalProductIdVersion.Windows8AndUp ? DecodeProductKeyWin8AndUp(digitalProductId)
+                                                                                    : DecodeProductKey(digitalProductId);
         }
 
         /// <summary>
@@ -102,7 +106,7 @@ namespace Konfiguration_WPF
         /// <returns>Decoded Windows Product Key as a string</returns>
         public static string DecodeProductKeyWin8AndUp(byte[] digitalProductId)
         {
-            var key = String.Empty;
+            var key = string.Empty;
             const int keyOffset = 52;
             var isWin8 = (byte)((digitalProductId[66] / 6) & 1);
             digitalProductId[66] = (byte)((digitalProductId[66] & 0xf7) | (isWin8 & 2) * 4);
