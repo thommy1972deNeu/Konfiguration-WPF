@@ -9,7 +9,8 @@
 
     <Grid x:Name="Grid" Margin="0,0,0,28">
         
-            <Grid.RowDefinitions>
+
+        <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
@@ -51,7 +52,6 @@
         <!-- ################ BUTTON definieren ##########################-->
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.RowSpan="6">
             <Button x:Name="Email_Senden" Width="150" Height="30" Content="Email senden" Click="Send_Mail"/>
-            <Button x:Name="In_Datenbank" Width="150" Height="30" Content="In Datenbank" Margin="0,5,0,0" Click="In_Database"/>
             <Button x:Name="MSCONFIG" Width="150" Height="30" Margin="0,5,0,0" Click="MSConfig_oeffnen">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="Bilder\icons8-tv-show-64.png" Width="24"/>
@@ -204,7 +204,13 @@
                 <MenuItem Header="OS-Version"/>
                 <MenuItem Header="OS-Lizenz"/>
             </MenuItem>
-
+            
+            <MenuItem Header="Über...">
+                <MenuItem Header="Mich"/>
+                <MenuItem Header="Meine Firma"/>
+                <MenuItem Header="Meine Hobbys"/>
+                <MenuItem Header="Dieses Programm" Click="MenuItem_Click"/>
+            </MenuItem>
         </Menu>
 
         <Border x:Name="Splash" Opacity=".1" Visibility="Collapsed" Background="Black"/>

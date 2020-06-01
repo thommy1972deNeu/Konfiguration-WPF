@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
+using Renci.SshNet.Messages;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -31,7 +32,16 @@ namespace Konfiguration_WPF
         {
             InitializeComponent();
 
+
+            eigene_kdnr.Text = RegistryWert.Registry_Lesen("Kundennummer");
+            eigene_kdnr.IsEnabled = false;
+
             status.Text = "© 2019 - " + DateTime.Now.Year + " Computerservice Blasius Thomas";
+        }
+
+        public static String GetTimestamp(DateTime value)
+        {
+            return value.ToString("yyyyMMddHHmmssffff");
         }
         public static object SystemTyp()
         {
@@ -183,14 +193,48 @@ namespace Konfiguration_WPF
                 kd_nachname.Focus();
                 return;
             }
-
-            if (eigene_seriennummer.Text == "")
+            if (kd_vorname.Text == "")
             {
-                MessageBox.Show("Seriennummer muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
-                eigene_seriennummer.Focus();
+                MessageBox.Show("Ihr Vorname muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                kd_vorname.Focus();
                 return;
-                
             }
+
+            if (kd_strasse.Text == "")
+            {
+                MessageBox.Show("Ihre Strasse muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                kd_strasse.Focus();
+                return;
+            }
+
+            if (kd_hsnr.Text == "")
+            {
+                MessageBox.Show("Ihre Hausnummer muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                kd_hsnr.Focus();
+                return;
+            }
+
+            if (kd_plz.Text == "")
+            {
+                MessageBox.Show("Ihre PLZ muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                kd_plz.Focus();
+                return;
+            }
+
+            if (kd_ort.Text == "")
+            {
+                MessageBox.Show("Ihr Ort muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                kd_ort.Focus();
+                return;
+            }
+
+            if (kd_email.Text == "")
+            {
+                MessageBox.Show("Ihre Email Adresse muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                kd_email.Focus();
+                return;
+            }
+
             if (antivirenprogramm.Text == "Auswahl")
             {
                 MessageBox.Show("Antiviren Programm muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -223,10 +267,11 @@ namespace Konfiguration_WPF
 
             string body = @"Rechner-Konfiguration" + Environment.NewLine;
             body += "Kundenname: " + kd_nachname.Text + " " + kd_vorname.Text + Environment.NewLine;
-            body += "KD Adresse: " + kd_strasse.Text + " " + kd_hsnr.Text + Environment.NewLine;
-            body +=  kd_plz.Text + " " + kd_ort.Text + Environment.NewLine;
+            body += "KD Adresse: " + Environment.NewLine;
+            body += kd_strasse.Text + " " + kd_hsnr.Text + Environment.NewLine;
+            body += kd_plz.Text + " " + kd_ort.Text + Environment.NewLine;
+            body += "Kundenummer: " + eigene_kdnr.Text + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
-            body += "Eigene Seriennummer: " + eigene_seriennummer.Text + Environment.NewLine;
             body += "Antiviren-Software: " + antivirenprogramm.Text + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
             body += "Geräte-Art: " + SystemTyp() + Environment.NewLine;

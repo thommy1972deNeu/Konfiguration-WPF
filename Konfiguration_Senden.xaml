@@ -29,8 +29,8 @@
         </Grid.ColumnDefinitions>
 
 
-        <Label Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Content="Eigene Seriennummer (wenn nicht bekannt, frei lassen)" FontSize="12" Grid.ColumnSpan="2" Margin="146,0" Width="300"/>
-        <TextBox Grid.Row="2" Grid.Column="0" x:Name="eigene_seriennummer" Width="200" FontSize="14" Grid.ColumnSpan="2"/>
+        <Label Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Center" Content="Ihre Kundennummer" FontSize="14" Grid.ColumnSpan="2" Margin="146,0" Width="300"/>
+        <TextBox Grid.Row="2" Grid.Column="0" x:Name="eigene_kdnr" HorizontalContentAlignment="Center" Width="200" FontSize="20" Grid.ColumnSpan="2"/>
 
         <Label Grid.Row="3" Grid.Column="0" Content="Nachname: " HorizontalAlignment="Right" VerticalContentAlignment="Center" FontSize="14"/>
         <TextBox Grid.Row="3" Grid.Column="1" x:Name="kd_nachname" FontSize="14" GotFocus="kd_nachname_GotFocus" LostFocus="kd_nachname_LostFocus"/>

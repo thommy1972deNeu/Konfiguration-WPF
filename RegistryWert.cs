@@ -20,6 +20,17 @@ namespace Konfiguration_WPF
             key.Close();
         }
 
+        public static string Registry_Lesen(string value)
+        {
+            try
+            {
+                RegistryKey key = Registry.CurrentConfig.OpenSubKey(@"Computerservice Blasius Thomas\");
+                return key.GetValue(value).ToString();
+            }
+            catch { return null; }
+        }
+
+
 
         public static string Encryption_Key()
         {

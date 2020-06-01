@@ -18,15 +18,39 @@ namespace Konfiguration_WPF
 
     public partial class MainWindow : Window
     {
+
+
+        // ###########################################################
+        // #############                              ################
+        // #############   KUNDENNUMMER ANGEBEN !!!   ################
+        // #############                              ################
+        // ###########################################################
+
+        public string KDNR = "12345";
+
+        // ###########################################################
+        // ###########################################################
         public MainWindow()
         {
-
+            
             InitializeComponent();
 
+            RegistryWert.Registry_Eintrag("Kundennummer", KDNR);
             // ######################################################################
             // ################# Ausgaben definieren !! #############################
             // ######################################################################
-       
+
+            if (string.IsNullOrEmpty(RegistryWert.Registry_Lesen("Impulserhaltungssatz")))
+                RegistryWert.Registry_Eintrag("Impulserhaltungssatz", DateTime.Now.Date.ToString());
+
+            DateTime dt = Convert.ToDateTime(RegistryWert.Registry_Lesen("Impulserhaltungssatz"));
+            if (dt == DateTime.Now.Date)
+            {
+                Email_Senden.Visibility = Visibility.Hidden;
+            }
+
+
+
             SystemTyp();
             HDD1();
             HDD2();
@@ -46,13 +70,12 @@ namespace Konfiguration_WPF
                 key.Close();
             } else
             {
-                MessageBox.Show("Gerät ist bereits bei uns gewesen !" + Environment.NewLine + "Proz-ID: " + Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Proz_ID", true) + Environment.NewLine + Environment.NewLine + "Bitte Warten... Konfiguration wird geladen...", "Message", MessageBoxButton.OK);
                 Reg_Wert_Serial.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Serial", true);
                 Reg_Wert_Proz_ID.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Proz_ID", true);
                 Reg_Wert_Datum.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", true) + " Uhr";
             }
-            
 
+            RegistryWert.Registry_Eintrag("Impulserhaltungssatz", DateTime.Now.Date.ToString());
 
             lbl_OS_Lizenznummer.Content = KeyDecoder.GetWindowsProductKeyFromRegistry();
             RegistryWert.Registry_Eintrag("Windows-Lizenz", KeyDecoder.GetWindowsProductKeyFromRegistry());
@@ -402,92 +425,16 @@ namespace Konfiguration_WPF
             Grid.Effect = null;
         }
 
-        public static int Letzte_Serial()
-        {
-            OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-            OleDbCommand cmd_letzte = new OleDbCommand("SELECT Eigene_Serial FROM Rechner ORDER BY Eigene_Serial DESC", con);
-            con.Open();
-            object letz = cmd_letzte.ExecuteScalar();
-            con.Close();
-            cmd_letzte.Dispose();
-            return Convert.ToInt32(letz)+1;
-        }
-
-
-        private async void In_Database(object sender, RoutedEventArgs e)
-        {
-                try
-                {
-
-                OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-                int i = 0;
-                OleDbCommand cmd_suche = new OleDbCommand("SELECT * FROM Rechner WHERE Seriennummer = @snummer", con);
-                cmd_suche.Parameters.AddWithValue("@snummer", lbl_Seriennummer.Content);
-                con.Open();
-                OleDbDataReader reader1 = cmd_suche.ExecuteReader();
-                while(reader1.Read())
-                {
-                    i++;
-                }
-                cmd_suche.Dispose();
-                con.Close();
-                reader1.Close();
-
-                if (i == 0)
-                {
-                    OleDbCommand cmd = new OleDbCommand("INSERT INTO Rechner (System_Art, KD_Nummer, CPU, CPU_Bit, Hersteller, Modell1, Modell2, HDD1, HDD2, HDD3, RAM_TYP, RAM_GB, RAM_SLOTS, RAM_SPEED, Seriennummer, Grafikkarte, GRAKA_Aufloesung, MB_Hersteller, MB_Modell, DVD1, DVD2, OS_Version, OS_Lizenz, Datum) VALUES (@System_Art, @KD_Nummer, @CPU, @CPU_Bit, @Hersteller, @Modell1, @Modell2, @HDD1, @HDD2, @HDD3, @RAM_TYP, @RAM_GB, @RAM_SLOTS, @RAM_SPEED, @Seriannummer, @Grafikkarte, @GRAKA_Aufloesung, @MB_Hersteller, @MB_Modell, @DVD1, @DVD2, @OS_Version, OS_Lizenz, Datum)", con);
-
-                    cmd.Parameters.AddWithValue("@System_Art", SystemTyp_String());
-                    cmd.Parameters.AddWithValue("@KD_Nummer", "1");
-                    cmd.Parameters.AddWithValue("@CPU", RegistryWert.CPU_NAME());
-                    cmd.Parameters.AddWithValue("@CPU_Bit", RegistryWert.CPU_BIT());
-                    cmd.Parameters.AddWithValue("@Hersteller", RegistryWert.Hersteller());
-                    cmd.Parameters.AddWithValue("@Modell1", RegistryWert.Modell1());
-                    cmd.Parameters.AddWithValue("@Modell2", RegistryWert.Modell2());
-                    cmd.Parameters.AddWithValue("@HDD1", HDD1_String());
-                    cmd.Parameters.AddWithValue("@HDD2", HDD2_String());
-                    cmd.Parameters.AddWithValue("@HDD3", HDD3_String());
-                    cmd.Parameters.AddWithValue("@RAM_TYP", RegistryWert.RAM_TYP());
-                    cmd.Parameters.AddWithValue("@RAM_GB", RegistryWert.RAM_TOTAL());
-                    cmd.Parameters.AddWithValue("@RAM_SLOTS", RegistryWert.RAM_ANZ());
-                    cmd.Parameters.AddWithValue("@RAM_SPEED", RegistryWert.RAM_SPEED());
-                    cmd.Parameters.AddWithValue("@Seriennummer", RegistryWert.SERIENNUMMER());
-                    cmd.Parameters.AddWithValue("@Grafikkarte", RegistryWert.GRAFIK1());
-                    cmd.Parameters.AddWithValue("@GRAKA_Aufloesung", RegistryWert.GRAFIK1_RESOLUTION());
-                    cmd.Parameters.AddWithValue("@MB_Hersteller", RegistryWert.Hersteller());
-                    cmd.Parameters.AddWithValue("@MB_Modell", RegistryWert.Modell1());
-                    cmd.Parameters.AddWithValue("@DVD1", RegistryWert.LW1());
-                    cmd.Parameters.AddWithValue("@DVD2", RegistryWert.LW2());
-                    cmd.Parameters.AddWithValue("@OS_Version", RegistryWert.GetWindwosClientVersion());
-                    cmd.Parameters.AddWithValue("@OS_Lizenz", KeyDecoder.GetWindowsProductKeyFromRegistry());
-                    cmd.Parameters.AddWithValue("@Datum", DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year);
-
-                    await con.OpenAsync();
-                    await cmd.ExecuteNonQueryAsync();
-                    MessageBox.Show("Daten wurden eingetragen !", "Erfolgreich", MessageBoxButton.OK);
-                    cmd.Dispose();
-                    con.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Die Seriennummer wird bereits Verwendet !", "Fehler", MessageBoxButton.OK);
-                }
-
-            } catch { }
-
-        }
 
         private void MSConfig_oeffnen(object sender, RoutedEventArgs e)
         {
-            if(File.Exists(Environment.SystemDirectory + "msconfig.exe"))
-            {
-                MessageBox.Show("Existent", "Jip", MessageBoxButton.OK);
-            } else
-            {
-                MessageBox.Show("Nicht da", "Fehler", MessageBoxButton.OK);
-            }
+            System.Diagnostics.Process.Start("C:\\Windows\\System32\\msconfig.exe");
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 
 
