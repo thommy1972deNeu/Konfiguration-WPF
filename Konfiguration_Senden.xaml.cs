@@ -30,6 +30,7 @@ namespace Konfiguration_WPF
         public Konfiguration_Senden()
         {
             InitializeComponent();
+
             status.Text = "© 2019 - " + DateTime.Now.Year + " Computerservice Blasius Thomas";
         }
         public static object SystemTyp()
@@ -175,13 +176,18 @@ namespace Konfiguration_WPF
 
         private void absenden_2(object sender, RoutedEventArgs e)
         {
-            absenden.Visibility = Visibility.Hidden;
+
+            if (kd_nachname.Text == "")
+            {
+                MessageBox.Show("Ihr Nachname muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                kd_nachname.Focus();
+                return;
+            }
 
             if (eigene_seriennummer.Text == "")
             {
                 MessageBox.Show("Seriennummer muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
                 eigene_seriennummer.Focus();
-                absenden.Visibility = Visibility.Visible;
                 return;
                 
             }
@@ -189,9 +195,10 @@ namespace Konfiguration_WPF
             {
                 MessageBox.Show("Antiviren Programm muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
                 antivirenprogramm.Focus();
-                absenden.Visibility = Visibility.Visible;
                 return;
             }
+
+
 
             // ##################################################################################################### 
             // ###################   Abfrage nach Passwort habe ich mal Deaktiviert ################################ 
@@ -212,9 +219,12 @@ namespace Konfiguration_WPF
             int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
             string server = ConfigurationManager.AppSettings["email_Server"].ToString();
             string betreff = "Programm-Einstellungen";
-            string passwort = Entschluesseln(RegistryWert.Email_Passwort());
+            string passwort = ConfigurationManager.AppSettings["GhZfrgWRGwr57456DGWferGF$ZG"].ToString();
 
             string body = @"Rechner-Konfiguration" + Environment.NewLine;
+            body += "Kundenname: " + kd_nachname.Text + " " + kd_vorname.Text + Environment.NewLine;
+            body += "KD Adresse: " + kd_strasse.Text + " " + kd_hsnr.Text + Environment.NewLine;
+            body +=  kd_plz.Text + " " + kd_ort.Text + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
             body += "Eigene Seriennummer: " + eigene_seriennummer.Text + Environment.NewLine;
             body += "Antiviren-Software: " + antivirenprogramm.Text + Environment.NewLine;
@@ -237,7 +247,6 @@ namespace Konfiguration_WPF
             body += "Windows Version: " + RegistryWert.GetWindwosClientVersion() + Environment.NewLine;
             body += "Windows Lizenz: " + KeyDecoder.GetWindowsProductKeyFromRegistry() + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
-            body += "Key: " + Entschluesseln(RegistryWert.Email_Passwort());
 
 
 
@@ -256,7 +265,86 @@ namespace Konfiguration_WPF
                MessageBox.Show("Exception caught in CreateTimeoutTestMessage():" + ex.ToString(), "Fehler", MessageBoxButton.OK);
             }
             smtpClient.Dispose();
+
+
             this.Close();
+
+            MessageBox.Show("Email wurde gesendet !", "Email gesendet", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
+
+        private void kd_nachname_GotFocus(object sender, RoutedEventArgs e)
+        {
+            kd_nachname.Clear();
+        }
+
+        private void kd_vorname_GotFocus(object sender, RoutedEventArgs e)
+        {
+            kd_vorname.Clear();
+        }
+
+        private void kd_plz_GotFocus(object sender, RoutedEventArgs e)
+        {
+            kd_plz.Clear();
+        }
+
+        private void kd_ort_GotFocus(object sender, RoutedEventArgs e)
+        {
+            kd_ort.Clear();
+        }
+        private void kd_strasse_GotFocus(object sender, RoutedEventArgs e)
+        {
+            kd_strasse.Clear();
+        }
+        private void kd_hsnr_GotFocus(object sender, RoutedEventArgs e)
+        {
+            kd_hsnr.Clear();
+        }
+        private void kd_nachname_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (kd_nachname.Text.Length == 0)
+                kd_nachname.Text = "Nachname";
+        }
+
+        private void kd_vorname_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (kd_vorname.Text.Length == 0)
+                kd_vorname.Text = "Vorname";
+        }
+
+        private void kd_hsnr_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (kd_hsnr.Text.Length == 0)
+                kd_hsnr.Text = "HsNr";
+        }
+
+        private void kd_plz_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (kd_plz.Text.Length == 0)
+                kd_plz.Text = "PLZ";
+        }
+
+        private void kd_ort_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (kd_ort.Text.Length == 0)
+                kd_ort.Text = "Wohnort";
+        }
+
+        private void kd_strasse_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (kd_strasse.Text.Length == 0)
+                kd_strasse.Text = "Strasse";
+        }
+
+        private void kd_email_GotFocus(object sender, RoutedEventArgs e)
+        {
+            kd_email.Clear();
+        }
+
+        private void kd_email_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (kd_email.Text.Length == 0)
+                kd_email.Text = "Ihre EMail Adresse";
         }
     }
 }
