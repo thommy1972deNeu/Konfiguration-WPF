@@ -1,19 +1,25 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.VisualBasic.Devices;
+using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.OleDb;
-using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Konfiguration_WPF
 {
     class RegistryWert
     {
+
+        public static void Registry_Eintrag(string name, string value)
+        {
+            RegistryKey key;
+            key = Registry.CurrentConfig.CreateSubKey("Computerservice Blasius Thomas");
+            key.SetValue(name, value);
+            key.Close();
+        }
+
 
         public static string Encryption_Key()
         {

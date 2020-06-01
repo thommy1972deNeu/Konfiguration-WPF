@@ -105,6 +105,7 @@
     <Compile Include="Konfiguration_Senden.xaml.cs">
       <DependentUpon>Konfiguration_Senden.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logging.cs" />
     <Compile Include="RegistryWert.cs" />
     <Page Include="Konfiguration_Senden.xaml">
       <SubType>Designer</SubType>

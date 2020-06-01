@@ -179,7 +179,7 @@ namespace Konfiguration_WPF
 
             if (eigene_seriennummer.Text == "")
             {
-                MessageBox.Show("Seriennummer muss angegeben werden !", "Fehler", MessageBoxButton.OK);
+                MessageBox.Show("Seriennummer muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
                 eigene_seriennummer.Focus();
                 absenden.Visibility = Visibility.Visible;
                 return;
@@ -187,7 +187,7 @@ namespace Konfiguration_WPF
             }
             if (antivirenprogramm.Text == "Auswahl")
             {
-                MessageBox.Show("Antiviren Programm muss angegeben werden !", "Fehler", MessageBoxButton.OK);
+                MessageBox.Show("Antiviren Programm muss angegeben werden !", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
                 antivirenprogramm.Focus();
                 absenden.Visibility = Visibility.Visible;
                 return;

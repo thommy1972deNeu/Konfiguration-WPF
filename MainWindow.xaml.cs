@@ -55,20 +55,47 @@ namespace Konfiguration_WPF
 
 
             lbl_OS_Lizenznummer.Content = KeyDecoder.GetWindowsProductKeyFromRegistry();
+            RegistryWert.Registry_Eintrag("Windows-Lizenz", KeyDecoder.GetWindowsProductKeyFromRegistry());
+
             lbl_Prozessor.Content = RegistryWert.CPU_NAME() + " (" + RegistryWert.CPU_BIT() + " Bit)";
+            RegistryWert.Registry_Eintrag("CPU_Bit", RegistryWert.CPU_BIT() + " Bit");
+
             lbl_Hersteller.Content = RegistryWert.Hersteller();
+            RegistryWert.Registry_Eintrag("PC_Hersteller", RegistryWert.Hersteller());
+
             lbl_Modell1.Content = RegistryWert.Modell1();
+            RegistryWert.Registry_Eintrag("PC_Modell 1", RegistryWert.Modell1());
+
             lbl_Modell2.Content = RegistryWert.Modell2();
+            RegistryWert.Registry_Eintrag("PC_Modell 2", RegistryWert.Modell2());
+
             lbl_RAM_SLOTS.Content = Convert.ToInt32(RegistryWert.RAM_ANZ()) + " Slots belegt";
+            RegistryWert.Registry_Eintrag("RAM_Slots", Convert.ToInt32(RegistryWert.RAM_ANZ()) + " Slots belegt");
+
             lbl_RAM_TYP.Content = RegistryWert.RAM_TYP() + " @ " + RegistryWert.RAM_SPEED() + " MHz";
+            RegistryWert.Registry_Eintrag("RAM_Speed", RegistryWert.RAM_SPEED() + " MHz");
+
             lbl_RAM_TOTAL.Content = RegistryWert.RAM_TOTAL() + " GB";
+            RegistryWert.Registry_Eintrag("RAM_Total", RegistryWert.RAM_TOTAL() + " GB");
+
             lbl_Seriennummer.Content = RegistryWert.SERIENNUMMER();
             lbl_GRAKA1.Content = RegistryWert.GRAFIK1();
+            RegistryWert.Registry_Eintrag("Grafik_Karte", RegistryWert.GRAFIK1());
+
             lbl_Resolution.Content = RegistryWert.GRAFIK1_RESOLUTION();
+            RegistryWert.Registry_Eintrag("Grafik_Auflösung", RegistryWert.GRAFIK1_RESOLUTION());
+
             lbl_Mainboard.Content = RegistryWert.MAINBOARD();
+            RegistryWert.Registry_Eintrag("Mainboaard_Modell", RegistryWert.MAINBOARD());
+
             lbl_DVD1.Content = RegistryWert.LW1();
+            RegistryWert.Registry_Eintrag("Laufwerk 1", RegistryWert.LW1());
+
             lbl_DVD2.Content = RegistryWert.LW2();
+            RegistryWert.Registry_Eintrag("Laufwerk 2", RegistryWert.LW2());
+
             lbl_OS_Version.Content = RegistryWert.GetWindwosClientVersion();
+            RegistryWert.Registry_Eintrag("Windows-Version", RegistryWert.GetWindwosClientVersion());
 
             // ######################################################################
             // ############### Letzte Eigene Serial eintragen !! ####################
@@ -452,7 +479,7 @@ namespace Konfiguration_WPF
 
         private void MSConfig_oeffnen(object sender, RoutedEventArgs e)
         {
-            if(System.IO.File.Exists(Environment.SystemDirectory + "msconfig.exe"))
+            if(File.Exists(Environment.SystemDirectory + "msconfig.exe"))
             {
                 MessageBox.Show("Existent", "Jip", MessageBoxButton.OK);
             } else
