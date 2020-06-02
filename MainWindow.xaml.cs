@@ -25,20 +25,11 @@ namespace Konfiguration_WPF
 
             InitializeComponent();
 
-
-                    KDNR kundenform = new KDNR();
-                    kundenform.Show();
-                    kundenform.Topmost = true;
-                    this.Visibility = Visibility.Hidden;
-   
-
+     
 
                 // ######################################################################
                 // ################# Ausgaben definieren !! #############################
                 // ######################################################################
-
-
-
 
                 SystemTyp();
                 HDD1();
@@ -52,7 +43,9 @@ namespace Konfiguration_WPF
                 if (Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", null) == null)
                 {
                     RegistryKey key;
-                    key = Registry.CurrentConfig.CreateSubKey("Computerservice Blasius Thomas");
+                    key = Registry.CurrentUser.CreateSubKey("Computerservice Blasius Thomas");
+                    key.SetValue("Kundennummer", "");
+                    
                     key.SetValue("Serial", RegistryWert.SERIENNUMMER());
                     key.SetValue("Proz_ID", RegistryWert.CPU_ID());
                     key.SetValue("Datum", DateTime.Now);

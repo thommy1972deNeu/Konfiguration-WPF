@@ -17,23 +17,19 @@ namespace Konfiguration_WPF
         public static void Registry_Eintrag(string name, string value)
         {
             RegistryKey key;
-            key = Registry.CurrentConfig.CreateSubKey("Computerservice Blasius Thomas");
+            key = Registry.CurrentUser.CreateSubKey(@"Computerservice Blasius Thomas");
             key.SetValue(name, value);
             key.Close();
         }
 
         public static string Registry_Lesen(string value)
         {
-            try
-            {
-                RegistryKey key = Registry.CurrentConfig.OpenSubKey(@"Computerservice Blasius Thomas\", true);
+         
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Computerservice Blasius Thomas\", true);
+                if(key != null)
                 return key.GetValue(value).ToString();
-            }
-            catch (Exception ex)
-            {
-               // Logging.WriteLOG("<ERROR> Methode Reg_Lesen in Utilities.cs");
+
                 return null;
-            }
 
         }
 

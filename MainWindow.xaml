@@ -51,7 +51,7 @@
         <Label x:Name="Label_Keine_Kundenummer" Content="Sie haben keine Kundenummer angegeben !" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Foreground="Red" Margin="0,53,0,7" HorizontalContentAlignment="Center" FontSize="18" FontFamily="Arial Black"/>
         <Button x:Name="Button_Keine_Kundenummer" Grid.Row="0" Grid.Column="3" Height="35" VerticalContentAlignment="Center" Width="Auto" BorderThickness="2" HorizontalContentAlignment="Right" Padding="0,0,5,0" Margin="42,80,58,4" RenderTransformOrigin="0.095,0.471" Background="#FF134997" BorderBrush="#FFFD0000" Click="Button_Click">
             <StackPanel Orientation="Horizontal">
-                <Image HorizontalAlignment="Left" Width="30" Height="30" Source="icons8-achtung-48.png" Margin="0,0,20,0" Stretch="Uniform"/>
+                <Image HorizontalAlignment="Left" Width="30" Height="30" Source="pack://siteoforigin:,,,/Resources/icons8-achtung-48.png" Margin="0,0,20,0" Stretch="Uniform"/>
                 <Label Content="Jetzt ihre Kundenummer eintragen !" HorizontalAlignment="Right" Margin="-2,2,0,0" FontSize="12" FontWeight="Bold" Foreground="Wheat"></Label>
             </StackPanel>
         </Button>
