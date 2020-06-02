@@ -8,7 +8,7 @@
         Title="Konfigurationstool" Height="900" Width="800" WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="Grid" Margin="0,0,0,28">
-        
+
 
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -47,8 +47,14 @@
 
         <!-- ################## WERBUNG #########################-->
         <Image Source="https://www.zwpc.de/LogoKachel.jpg" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="5,25,0,0"/>
-        <Label Content="PC-Konfiguration" Grid.Row="0" Grid.Column="3" Margin="0,20,20,0" Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" HorizontalAlignment="Right" FontSize="34"/>
-
+        <Label Content="Ihre PC-Konfiguration" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Margin="0,10,0,0" Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="34"/>
+        <Label x:Name="Label_Keine_Kundenummer" Content="Sie haben keine Kundenummer angegeben !" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Foreground="Red" Margin="0,53,0,7" HorizontalContentAlignment="Center" FontSize="18" FontFamily="Arial Black"/>
+        <Button x:Name="Button_Keine_Kundenummer" Grid.Row="0" Grid.Column="3" Height="35" VerticalContentAlignment="Center" Width="Auto" BorderThickness="2" HorizontalContentAlignment="Right" Padding="0,0,5,0" Margin="42,80,58,4" RenderTransformOrigin="0.095,0.471" Background="#FF134997" BorderBrush="#FFFD0000" Click="Button_Click">
+            <StackPanel Orientation="Horizontal">
+                <Image HorizontalAlignment="Left" Width="30" Height="30" Source="icons8-achtung-48.png" Margin="0,0,20,0" Stretch="Uniform"/>
+                <Label Content="Jetzt ihre Kundenummer eintragen !" HorizontalAlignment="Right" Margin="-2,2,0,0" FontSize="12" FontWeight="Bold" Foreground="Wheat"></Label>
+            </StackPanel>
+        </Button>
         <!-- ################ BUTTON definieren ##########################-->
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.RowSpan="6">
             <Button x:Name="Email_Senden" Width="150" Height="30" Content="Email senden" Click="Send_Mail"/>
@@ -59,7 +65,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        
+
 
         <!--  #################    Geräte-Art   **Row 1**    ###############################-->
         <Label Grid.Row="1" Grid.Column="2" Content="Geräte-Art :" VerticalAlignment="Center" HorizontalAlignment="Right"/>
@@ -181,6 +187,7 @@
                 <MenuItem Header="Bearbeiten"/>
                 <MenuItem Header="Kopieren"/>
                 <MenuItem Header="Speichern"/>
+                <MenuItem Header="Ändern sie ihre Kundendaten" Click="MenuItem_Click_1"/>
             </MenuItem>
 
             <MenuItem Header="Kopieren">
@@ -204,7 +211,7 @@
                 <MenuItem Header="OS-Version"/>
                 <MenuItem Header="OS-Lizenz"/>
             </MenuItem>
-            
+
             <MenuItem Header="Über...">
                 <MenuItem Header="Mich"/>
                 <MenuItem Header="Meine Firma"/>
@@ -217,5 +224,5 @@
 
     </Grid>
 
-    
+
 </Window>
