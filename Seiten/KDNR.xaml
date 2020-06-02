@@ -10,7 +10,7 @@
         <DropShadowEffect/>
     </Window.Effect>
     <Grid Margin="0,0,-29,0">
-        <Image x:Name="image" HorizontalAlignment="Left" Height="306" Margin="2,90,0,0" VerticalAlignment="Top" Width="314" Source="/Konfiguration WPF;component/Bilder/white-male-1834121_640.jpg"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="306" Margin="2,90,0,0" VerticalAlignment="Top" Width="314" Source="/Bilder/white-male-1834121_640.jpg"/>
         <TextBox x:Name="txt_KDNR" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="18" Height="35" Margin="522,68,235,0" VerticalAlignment="Top" Width="135" FontFamily="Verdana" PreviewTextInput="txt_KDNR_PreviewTextInput" BorderBrush="#FF0342FF" BorderThickness="2" VerticalContentAlignment="Center">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">

@@ -5,7 +5,8 @@ using System;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Management;
-
+using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace Konfiguration_WPF
 {
@@ -20,40 +21,57 @@ namespace Konfiguration_WPF
             key.Close();
         }
 
-        public static string Registry_Lesen(string value)
+        public static string Registry_Lesen(string value, [CallerMemberName] string memberName = "",[CallerFilePath] string fileName = "",[CallerLineNumber] int lineNumber = 0)
         {
             try
             {
                 RegistryKey key = Registry.CurrentConfig.OpenSubKey(@"Computerservice Blasius Thomas\");
                 return key.GetValue(value).ToString();
+            } catch (Exception ex) {
+                MessageBox.Show("Konnte die Variable " + value + " nicht aus der Registry laden !" + Environment.NewLine + ex.StackTrace + memberName + fileName + lineNumber);
+                return null;
             }
-            catch { return null; }
         }
-
-
 
         public static string Encryption_Key()
         {
-            OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-            OleDbCommand cmd_key = new OleDbCommand("SELECT EncryptionKey FROM Config", con);
-            con.Open();
-            object key = cmd_key.ExecuteScalar();
-            con.Close();
-            cmd_key.Dispose();
-            return key.ToString();
-        }
+
+            try
+            {
+                OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                OleDbCommand cmd_key = new OleDbCommand("SELECT EncryptionKey FROM Config", con);
+                con.Open();
+                object key = cmd_key.ExecuteScalar();
+                con.Close();
+                cmd_key.Dispose();
+                return key.ToString();
+            }
+            catch (Exception)
+            {
+                return null;
+      
+            }    
+         }
 
 
         public static string CPU_NAME()
         {
-            var name = String.Empty;
-            ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
-            ManagementObjectCollection moc = cpu.Get();
-            foreach (ManagementObject mo in moc)
+            try
             {
-                name = mo["Name"].ToString();
+                var name = String.Empty;
+                ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
+                ManagementObjectCollection moc = cpu.Get();
+                foreach (ManagementObject mo in moc)
+                {
+                    name = mo["Name"].ToString();
+                }
+                return name;
             }
-            return name;
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }
 
 
@@ -61,19 +79,32 @@ namespace Konfiguration_WPF
 
         public static int CPU_BIT()
         {
-            int Bit = 0;
-            ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
-            ManagementObjectCollection moc = cpu.Get();
-            foreach (ManagementObject mo in moc)
+            try
             {
-                Bit = Convert.ToInt32(mo["AddressWidth"]);
+                int Bit = 0;
+                ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
+                ManagementObjectCollection moc = cpu.Get();
+                foreach (ManagementObject mo in moc)
+                {
+                    Bit = Convert.ToInt32(mo["AddressWidth"]);
+                }
+                cpu.Dispose();
+                return Bit;
             }
-            cpu.Dispose();
-            return Bit;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
 
+        
+
+
         public static string CPU_ID()
+        {
+        try
         {
             var ProzId = String.Empty;
             ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
@@ -84,8 +115,16 @@ namespace Konfiguration_WPF
             }
             return ProzId;
         }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        }
 
         public static string SOCKET()
+        {
+        try
         {
             var Socket = String.Empty;
             ManagementObjectSearcher cpu = new ManagementObjectSearcher("SELECT * FROM Win32_processor");
@@ -97,70 +136,108 @@ namespace Konfiguration_WPF
             cpu.Dispose();
             return Socket;
         }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        }
 
 
         public static string Hersteller()
         {
-            var Hersteller = String.Empty;
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                var Hersteller = String.Empty;
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
                 {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    Hersteller = Conversions.ToString(current["Manufacturer"]);
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        Hersteller = Conversions.ToString(current["Manufacturer"]);
+                    }
+                    return Hersteller;
                 }
-                return Hersteller;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public static string Modell1()
         {
-            var Modell1 = String.Empty;
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                var Modell1 = String.Empty;
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
                 {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    Modell1 = Conversions.ToString(current["Product"]);
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        Modell1 = Conversions.ToString(current["Product"]);
+                    }
+                    return Modell1;
                 }
-                return Modell1;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public static string Modell2()
         {
-            var Modell2 = String.Empty;
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                var Modell2 = String.Empty;
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
                 {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    Modell2 = Conversions.ToString(current["Caption"]);
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        Modell2 = Conversions.ToString(current["Caption"]);
+                    }
+                    return Modell2;
                 }
-                return Modell2;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public static int RAM_ANZ()
         {
-            var Modell2 = String.Empty;
-            int anz = 0;
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PhysicalMemory"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                var Modell2 = String.Empty;
+                int anz = 0;
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PhysicalMemory"))
                 {
-                    anz++;
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        anz++;
 
+                    }
+                    return anz;
                 }
-                return anz;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
         public static string RAM_TYP()
@@ -224,8 +301,6 @@ namespace Konfiguration_WPF
                         ram_typ = "DDR3";
                     if (Conversions.ToString(current["MemoryType"]) == "25")
                         ram_typ = "FBD2";
-
-
                 }
                 return ram_typ;
             }
@@ -233,92 +308,132 @@ namespace Konfiguration_WPF
 
         public static double RAM_TOTAL()
         {
-            var mem = String.Empty;
-            double mem2 = 0;
-
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PhysicalMemory"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                var mem = String.Empty;
+                double mem2 = 0;
+
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PhysicalMemory"))
                 {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    mem = Conversions.ToString(current["Capacity"]);
-                    mem2 += Convert.ToDouble(mem.ToString());
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        mem = Conversions.ToString(current["Capacity"]);
+                        mem2 += Convert.ToDouble(mem.ToString());
+                    }
+                    mem2 = mem2 / 1073741824;
+                    return mem2;
                 }
-                mem2 = mem2 / 1073741824;
-                return mem2;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public static string RAM_SPEED()
         {
-            var speed = String.Empty;
-
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PhysicalMemory"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    speed = Conversions.ToString(current["Speed"]);
+                var speed = String.Empty;
 
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PhysicalMemory"))
+                {
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        speed = Conversions.ToString(current["Speed"]);
+
+                    }
+                    return speed;
                 }
-                return speed;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public static string SERIENNUMMER()
         {
-            var serial = String.Empty;
-
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    serial = Conversions.ToString(current["SerialNumber"]);
+                var serial = String.Empty;
 
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
+                {
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        serial = Conversions.ToString(current["SerialNumber"]);
+
+                    }
+                    return serial;
                 }
-                return serial;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public static string GRAFIK1()
         {
-            var graka1 = String.Empty;
-
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_VideoController"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    graka1 = Conversions.ToString(current["Name"]);
+                var graka1 = String.Empty;
 
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_VideoController"))
+                {
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        graka1 = Conversions.ToString(current["Name"]);
+
+                    }
+                    return graka1;
                 }
-                return graka1;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
         public static string GRAFIK1_RESOLUTION()
         {
-            var res = String.Empty;
-
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_VideoController"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    res = Conversions.ToString(current["VideoModeDescription"]);
+                var res = String.Empty;
 
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_VideoController"))
+                {
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        res = Conversions.ToString(current["VideoModeDescription"]);
+
+                    }
+                    return res;
                 }
-                return res;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -329,60 +444,92 @@ namespace Konfiguration_WPF
             var mb_mod = String.Empty;
             var alles = String.Empty;
 
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard"))
                 {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    mb_herst = Conversions.ToString(current["Manufacturer"]);
-                    mb_mod = Conversions.ToString(current["Product"]);
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        mb_herst = Conversions.ToString(current["Manufacturer"]);
+                        mb_mod = Conversions.ToString(current["Product"]);
+                    }
+                    alles = mb_herst + " " + mb_mod;
+                    return alles;
                 }
-                alles = mb_herst + " " + mb_mod;
-                return alles;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
         public static string LW1()
         {
             var lw = String.Empty;
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_CDROMDrive WHERE SCSILogicalUnit = 0"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_CDROMDrive WHERE SCSILogicalUnit = 0"))
                 {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    lw = Conversions.ToString(current["name"]);
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        lw = Conversions.ToString(current["name"]);
+                    }
                 }
+                return lw;
             }
-            return lw;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public static string LW2()
         {
             var lw = String.Empty;
-            ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
-            using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_CDROMDrive WHERE SCSILogicalUnit = 1"))
+            try
             {
-                enumerator = managementObjectSearcher.Get().GetEnumerator();
-                while (enumerator.MoveNext())
+                ManagementObjectCollection.ManagementObjectEnumerator enumerator = null;
+                using (ManagementObjectSearcher managementObjectSearcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_CDROMDrive WHERE SCSILogicalUnit = 1"))
                 {
-                    ManagementObject current = (ManagementObject)enumerator.Current;
-                    lw = Conversions.ToString(current["name"]);
+                    enumerator = managementObjectSearcher.Get().GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        ManagementObject current = (ManagementObject)enumerator.Current;
+                        lw = Conversions.ToString(current["name"]);
+                    }
                 }
-            }
-            if (lw == "")
-                lw = "---";
+                if (lw == "")
+                    lw = "---";
 
-            return lw;
+                return lw;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public static string GetWindwosClientVersion()
         {
-            string test = new ComputerInfo().OSFullName;
-            return test;
+            try
+            {
+                string test = new ComputerInfo().OSFullName;
+                return test;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

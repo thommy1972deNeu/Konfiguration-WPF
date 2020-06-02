@@ -124,15 +124,6 @@
     <Compile Include="Seiten\Meine_Hobbys.xaml.cs">
       <DependentUpon>Meine_Hobbys.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Seiten\Über_das_Programm.xaml.cs">
-      <DependentUpon>Über_das_Programm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Seiten\Über_meine_Firma.xaml.cs">
-      <DependentUpon>Über_meine_Firma.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Seiten\Über_Mich.xaml.cs">
-      <DependentUpon>Über_Mich.xaml</DependentUpon>
-    </Compile>
     <Page Include="Klassen\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,18 +150,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Seiten\Meine_Hobbys.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Seiten\Über_das_Programm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Seiten\Über_meine_Firma.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Seiten\Über_Mich.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,9 +201,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Bilder\icons8-tv-show-64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons8-achtung-48.png" />

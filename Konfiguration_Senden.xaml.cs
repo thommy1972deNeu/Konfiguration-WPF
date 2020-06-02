@@ -177,7 +177,7 @@ namespace Konfiguration_WPF
                 }
                 return strDecrypted;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

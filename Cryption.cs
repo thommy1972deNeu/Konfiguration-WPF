@@ -36,7 +36,7 @@ namespace Konfiguration_WPF
                 }
                 return strOriginal;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

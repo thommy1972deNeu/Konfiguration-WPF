@@ -60,7 +60,7 @@
             <Button x:Name="Email_Senden" Width="150" Height="30" Content="Email senden" Click="Send_Mail"/>
             <Button x:Name="MSCONFIG" Width="150" Height="30" Margin="0,5,0,0" Click="MSConfig_oeffnen">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="Bilder\icons8-tv-show-64.png" Width="24"/>
+                    
                     <TextBlock Text="MSCONFIG starten" Margin="5"/>
                 </StackPanel>
             </Button>
@@ -216,7 +216,7 @@
                 <MenuItem Header="Mich"/>
                 <MenuItem Header="Meine Firma"/>
                 <MenuItem Header="Meine Hobbys"/>
-                <MenuItem Header="Dieses Programm" Click="MenuItem_Click"/>
+                <MenuItem Header="Dieses Programm"/>
             </MenuItem>
         </Menu>
 

@@ -16,7 +16,8 @@ namespace Konfiguration_WPF
 
     public partial class MainWindow : Window
     {
-        string kundenummer = RegistryWert.Registry_Lesen("Kundennummer");
+
+        string kundenummer;
 
         // ###########################################################
         // ###########################################################
@@ -26,18 +27,28 @@ namespace Konfiguration_WPF
             InitializeComponent();
 
 
-            if (string.IsNullOrEmpty(RegistryWert.Registry_Lesen("Kundennummer")))
+        
+            try
             {
-                KDNR kundenform = new KDNR();
-                kundenform.Show();
-                kundenform.Topmost = true;
-                this.Visibility = Visibility.Hidden;
+                if (string.IsNullOrEmpty(RegistryWert.Registry_Lesen("Kundennummer")))
+                {
+                    RegistryWert.Registry_Eintrag("Kundennummer", "");
+                    KDNR kundenform = new KDNR();
+                    kundenform.Show();
+                    kundenform.Topmost = true;
+                    this.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    Label_Keine_Kundenummer.Visibility = Visibility.Hidden;
+                    Button_Keine_Kundenummer.Visibility = Visibility.Hidden;
+                    this.Visibility = Visibility.Visible;
+                }
             }
-            else
+            catch (Exception)
             {
-                Label_Keine_Kundenummer.Visibility = Visibility.Hidden;
-                Button_Keine_Kundenummer.Visibility = Visibility.Hidden;
-                this.Visibility = Visibility.Visible;
+
+                throw;
             }
 
 
@@ -158,7 +169,7 @@ namespace Konfiguration_WPF
                     }
                     return strOriginal;
                 }
-                catch (Exception ex)
+                catch
                 {
                     return null;
                 }
@@ -187,7 +198,7 @@ namespace Konfiguration_WPF
                     }
                     return strDecrypted;
                 }
-                catch (Exception ex)
+                catch
                 {
                     return null;
                 }
@@ -438,21 +449,18 @@ namespace Konfiguration_WPF
                 System.Diagnostics.Process.Start("C:\\Windows\\System32\\msconfig.exe");
             }
 
-            private void MenuItem_Click(object sender, RoutedEventArgs e)
-            {
 
-            }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            KDNR nr = new KDNR();
-            nr.Show();
+            KDNR nr1 = new KDNR();
+            nr1.Show();
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            KDNR nr = new KDNR();
-            nr.Show();
+            KDNR nr2 = new KDNR();
+            nr2.Show();
         }
     }
 
