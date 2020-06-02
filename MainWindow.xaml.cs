@@ -17,7 +17,6 @@ namespace Konfiguration_WPF
     public partial class MainWindow : Window
     {
 
-        string kundenummer;
 
         // ###########################################################
         // ###########################################################
@@ -27,43 +26,17 @@ namespace Konfiguration_WPF
             InitializeComponent();
 
 
-        
-            try
-            {
-                if (string.IsNullOrEmpty(RegistryWert.Registry_Lesen("Kundennummer")))
-                {
-                    RegistryWert.Registry_Eintrag("Kundennummer", "");
                     KDNR kundenform = new KDNR();
                     kundenform.Show();
                     kundenform.Topmost = true;
                     this.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    Label_Keine_Kundenummer.Visibility = Visibility.Hidden;
-                    Button_Keine_Kundenummer.Visibility = Visibility.Hidden;
-                    this.Visibility = Visibility.Visible;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+   
 
 
                 // ######################################################################
                 // ################# Ausgaben definieren !! #############################
                 // ######################################################################
 
-                if (string.IsNullOrEmpty(RegistryWert.Registry_Lesen("Impulserhaltungssatz")))
-                    RegistryWert.Registry_Eintrag("Impulserhaltungssatz", DateTime.Now.Date.ToString());
-
-                DateTime dt = Convert.ToDateTime(RegistryWert.Registry_Lesen("Impulserhaltungssatz"));
-                if (dt == DateTime.Now.Date)
-                {
-                    Email_Senden.Visibility = Visibility.Hidden;
-                }
 
 
 

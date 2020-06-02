@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.VisualBasic.Devices;
 using Microsoft.Win32;
+using Renci.SshNet.Messages;
 using System;
 using System.Configuration;
 using System.Data.OleDb;
@@ -21,16 +22,19 @@ namespace Konfiguration_WPF
             key.Close();
         }
 
-        public static string Registry_Lesen(string value, [CallerMemberName] string memberName = "",[CallerFilePath] string fileName = "",[CallerLineNumber] int lineNumber = 0)
+        public static string Registry_Lesen(string value)
         {
             try
             {
-                RegistryKey key = Registry.CurrentConfig.OpenSubKey(@"Computerservice Blasius Thomas\");
+                RegistryKey key = Registry.CurrentConfig.OpenSubKey(@"Computerservice Blasius Thomas\", true);
                 return key.GetValue(value).ToString();
-            } catch (Exception ex) {
-                MessageBox.Show("Konnte die Variable " + value + " nicht aus der Registry laden !" + Environment.NewLine + ex.StackTrace + memberName + fileName + lineNumber);
+            }
+            catch (Exception ex)
+            {
+               // Logging.WriteLOG("<ERROR> Methode Reg_Lesen in Utilities.cs");
                 return null;
             }
+
         }
 
         public static string Encryption_Key()
