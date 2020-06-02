@@ -27,8 +27,7 @@ namespace Konfiguration_WPF.Seiten
         {
             InitializeComponent();
 
-            txt_KDNR.Text = (RegistryWert.Registry_Lesen("Kundennummer").ToString() != null) ? RegistryWert.Registry_Lesen("Kundennummer").ToString() : "";
-
+            txt_KDNR.Text = RegistryWert.Registry_Lesen("Kundennummer").ToString();
             txt_Email.Text = RegistryWert.Registry_Lesen("KD-Email").ToString();
             txt_Nachname.Text = RegistryWert.Registry_Lesen("KD-Nachname").ToString();
             txt_Vorname.Text = RegistryWert.Registry_Lesen("KD-Vorname").ToString();
