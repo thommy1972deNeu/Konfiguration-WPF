@@ -45,6 +45,14 @@ namespace Konfiguration_WPF
             kd_ort.Text = RegistryWert.Registry_Lesen("KD-Ort");
             kd_email.Text = RegistryWert.Registry_Lesen("KD-Email");
 
+            kd_vorname.IsEnabled = (string.IsNullOrEmpty(kd_vorname.Text)) ? true : false;
+            kd_nachname.IsEnabled = (string.IsNullOrEmpty(kd_nachname.Text)) ? true : false;
+            kd_strasse.IsEnabled = (string.IsNullOrEmpty(kd_strasse.Text)) ? true : false;
+            kd_hsnr.IsEnabled = (string.IsNullOrEmpty(kd_hsnr.Text)) ? true : false;
+            kd_plz.IsEnabled = (string.IsNullOrEmpty(kd_plz.Text)) ? true : false;
+            kd_ort.IsEnabled = (string.IsNullOrEmpty(kd_ort.Text)) ? true : false;
+            kd_email.IsEnabled = (string.IsNullOrEmpty(kd_email.Text)) ? true : false;
+
             status.Text = "© 2019 - " + DateTime.Now.Year + " Computerservice Blasius Thomas";
         }
 
@@ -195,6 +203,7 @@ namespace Konfiguration_WPF
 
         private void absenden_2(object sender, RoutedEventArgs e)
         {
+            Absenden_Button.IsEnabled = false;
 
             if (kd_nachname.Text == "")
             {
@@ -251,25 +260,6 @@ namespace Konfiguration_WPF
                 return;
             }
 
-
-
-            // ##################################################################################################### 
-            // ###################   Abfrage nach Passwort habe ich mal Deaktiviert ################################ 
-            // ##################################################################################################### 
-
-            //if (zauberwort.Text != ConfigurationManager.AppSettings["GhZfrgWRGwr57456DGWferGF$ZG"].ToString())
-            //{
-            //  MessageBox.Show("Falsches Passwort !", "Fehler", MessageBoxButton.OK);
-            //  zauberwort.Focus();
-            //  absenden.Visibility = Visibility.Visible;
-            //  return;
-            //} 
-
-
-
-            MessageBox.Show("Pass: " + Pfade.MAIL_PASS() + Environment.NewLine + "Server: " + Pfade.MAIL_SERVER() + Environment.NewLine + "User: " + Pfade.MAIL_USER() + Environment.NewLine + "Username:" + Pfade.MAIL_USERNAME() + Environment.NewLine + "To: " +  Pfade.MAIL_TO());
-
-
             string body = @"Rechner-Konfiguration" + Environment.NewLine;
             body += "Kundenname: " + kd_nachname.Text + " " + kd_vorname.Text + Environment.NewLine;
             body += "KD Adresse: " + Environment.NewLine;
@@ -298,16 +288,13 @@ namespace Konfiguration_WPF
             body += "Windows Lizenz: " + KeyDecoder.GetWindowsProductKeyFromRegistry() + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
 
-            string passw = Pfade.MAIL_PASS();
-            string from = Pfade.MAIL_USER();
-            string username = //Pfade.MAIL_USERNAME();
-            string to = Pfade.MAIL_TO();
-            string server = Pfade.MAIL_SERVER();
+            Pfade.MAIL_USER();
 
-            MailMessage message = new MailMessage(from, to, "Einstellungen", body);
-            var smtpClient = new SmtpClient(server, 587)
+
+            MailMessage message = new MailMessage(Pfade.Mail_from, Pfade.Mail_to, "Einstellungen von " + RegistryWert.Registry_Lesen("KD-Nachname") + " " + RegistryWert.Registry_Lesen("KD-Vornname"), body);
+            var smtpClient = new SmtpClient(Pfade.Mail_server, Pfade.Mail_port)
             {
-                Credentials = new NetworkCredential(username, passw),
+                Credentials = new NetworkCredential(Pfade.Mail_username, Pfade.Mail_pass),
                 EnableSsl = true
             };
             try
@@ -327,78 +314,6 @@ namespace Konfiguration_WPF
 
         }
 
-        private void kd_nachname_GotFocus(object sender, RoutedEventArgs e)
-        {
-            kd_nachname.Clear();
-        }
-
-        private void kd_vorname_GotFocus(object sender, RoutedEventArgs e)
-        {
-            kd_vorname.Clear();
-        }
-
-        private void kd_plz_GotFocus(object sender, RoutedEventArgs e)
-        {
-            kd_plz.Clear();
-        }
-
-        private void kd_ort_GotFocus(object sender, RoutedEventArgs e)
-        {
-            kd_ort.Clear();
-        }
-        private void kd_strasse_GotFocus(object sender, RoutedEventArgs e)
-        {
-            kd_strasse.Clear();
-        }
-        private void kd_hsnr_GotFocus(object sender, RoutedEventArgs e)
-        {
-            kd_hsnr.Clear();
-        }
-        private void kd_nachname_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (kd_nachname.Text.Length == 0)
-                kd_nachname.Text = "Nachname";
-        }
-
-        private void kd_vorname_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (kd_vorname.Text.Length == 0)
-                kd_vorname.Text = "Vorname";
-        }
-
-        private void kd_hsnr_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (kd_hsnr.Text.Length == 0)
-                kd_hsnr.Text = "HsNr";
-        }
-
-        private void kd_plz_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (kd_plz.Text.Length == 0)
-                kd_plz.Text = "PLZ";
-        }
-
-        private void kd_ort_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (kd_ort.Text.Length == 0)
-                kd_ort.Text = "Wohnort";
-        }
-
-        private void kd_strasse_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (kd_strasse.Text.Length == 0)
-                kd_strasse.Text = "Strasse";
-        }
-
-        private void kd_email_GotFocus(object sender, RoutedEventArgs e)
-        {
-            kd_email.Clear();
-        }
-
-        private void kd_email_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (kd_email.Text.Length == 0)
-                kd_email.Text = "Ihre EMail Adresse";
-        }
+ 
     }
 }

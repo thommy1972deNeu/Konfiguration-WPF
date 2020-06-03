@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Web;
@@ -10,20 +11,26 @@ namespace Konfiguration_WPF.API
 
     public class Pfade
     {
+
+        
         public string Pfad_Kd = "https://www.zwpc.de//api//load_data.php";
         public string Pfad_Config = "https://www.zwpc.de//api//config.php";
-        public string Pfad_Mail_User = "https://www.zwpc.de//api//mail_user.php";
-        public string Pfad_Mail_Username = "https://www.zwpc.de//api//mail_username.php";
-        public string Pfad_Mail_to = "https://www.zwpc.de//api//mail_to.php";
-        public string Pfad_Mail_Pass = "https://www.zwpc.de//api//mail_pass.php";
-        public string Pfad_Mail_Server = "https://www.zwpc.de//api//mail_server.php";
+        //public string Pfad_Mail_User = "https://www.zwpc.de//api//mail_user.php";
+        //public string Pfad_Mail_Username = "https://www.zwpc.de//api//mail_username.php";
+        //public string Pfad_Mail_to = "https://www.zwpc.de//api//mail_to.php";
+        //public string Pfad_Mail_Pass = "https://www.zwpc.de//api//mail_pass.php";
+        //public string Pfad_Mail_Server = "https://www.zwpc.de//api//mail_server.php";
 
-        public Pfade()
-        {
-   
+        public string Pfad_Mail_Data = "https://www.zwpc.de//api//mail_data.php";
+        
 
-        }
-
+        public static string Mail_server { get; set; }
+        public static string Mail_user { get; set; }
+        public static string Mail_username { get; set; }
+        public static string Mail_from { get; set; }
+        public static string Mail_to { get; set; }
+        public static int Mail_port { get; set; }
+        public static string Mail_pass { get; set; }
 
         public string HTTPSRequestGet(string url, Dictionary<string, string> getParameters = null)
         {
@@ -49,77 +56,26 @@ namespace Konfiguration_WPF.API
             return str2;
         }
 
-        public static string MAIL_USER()
+        public static void MAIL_USER()
         {
             Pfade pf = new Pfade();
             Dictionary<string, string> getParameters = new Dictionary<string, string>();
             getParameters.Add("secret", Properties.Resources.Secret);
-            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_User, getParameters);
+            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_Data, getParameters);
             string[] data = kdnr_response.Split(':');
             if (kdnr_response.Length > 1)
             {
-                return data[0];
+                Mail_pass = data[0];
+                Mail_server = data[1];
+                Mail_from = data[2];
+                Mail_username = data[3];
+                Mail_to = data[4];
+                Mail_port = Convert.ToInt32(data[5]);
+
             }
-            return null;
+
         }
 
-        public static string MAIL_USERNAME()
-        {
-            Pfade pf = new Pfade();
-            Dictionary<string, string> getParameters = new Dictionary<string, string>();
-            getParameters.Add("secret", Properties.Resources.Secret);
-            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_Username, getParameters);
-            string[] data = kdnr_response.Split(':');
-            if (kdnr_response.Length > 1)
-            {
-                return data[0];
-            }
-            return null;
-        }
-
-
-        public static string MAIL_PASS()
-        {
-            Pfade pf = new Pfade();
-            Dictionary<string, string> getParameters = new Dictionary<string, string>();
-            getParameters.Add("secret", Properties.Resources.Secret);
-            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_Pass, getParameters);
-            string[] data = kdnr_response.Split(':');
-            if (kdnr_response.Length > 1)
-            {
-                return data[0];
-            }
-            return null;
-        }
-
-
-        public static string MAIL_SERVER()
-        {
-            Pfade pf = new Pfade();
-            Dictionary<string, string> getParameters = new Dictionary<string, string>();
-            getParameters.Add("secret", Properties.Resources.Secret);
-            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_Server, getParameters);
-            string[] data = kdnr_response.Split(':');
-            if (kdnr_response.Length > 1)
-            {
-                return data[0];
-            }
-            return null;
-        }
-
-        public static string MAIL_TO()
-        {
-            Pfade pf = new Pfade();
-            Dictionary<string, string> getParameters = new Dictionary<string, string>();
-            getParameters.Add("secret", Properties.Resources.Secret);
-            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_to, getParameters);
-            string[] data = kdnr_response.Split(':');
-            if (kdnr_response.Length > 1)
-            {
-                return data[0];
-            }
-            return null;
-        }
     }
 
 }
