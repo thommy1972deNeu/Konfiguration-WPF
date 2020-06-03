@@ -21,12 +21,20 @@ namespace Konfiguration_WPF
 
         public static string Registry_Lesen(string value)
         {
-         
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Computerservice Blasius Thomas\", true);
-                if(key != null)
-                return key.GetValue(value).ToString();
 
-                return null;
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Computerservice Blasius Thomas\", true);
+                if (key != null)
+                    return key.GetValue(value).ToString();
+            }
+            catch (Exception)
+            {
+                Registry_Eintrag(value, "");
+             
+            }
+            return "";
+            
 
         }
 
