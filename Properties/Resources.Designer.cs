@@ -69,5 +69,14 @@ namespace Konfiguration_WPF.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3hvA&amp;Bclc0E&amp;eEvqQfFwkS2sr#y5R54Xm%Oc#RU1FK ähnelt.
+        /// </summary>
+        internal static string Secret {
+            get {
+                return ResourceManager.GetString("Secret", resourceCulture);
+            }
+        }
     }
 }

@@ -5,185 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Konfiguration_WPF"
         mc:Ignorable="d"
-        Title="Konfigurationstool" Height="900" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Konfigurationstool" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize">
 
     <Grid x:Name="Grid" Margin="0,0,0,28">
 
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="648*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="189"/>
-            <ColumnDefinition Width="19"/>
-            <ColumnDefinition Width="139"/>
-            <ColumnDefinition Width="360"/>
-            <ColumnDefinition Width="30*"/>
-        </Grid.ColumnDefinitions>
+
 
         <!-- ################## WERBUNG #########################-->
-        <Image Source="https://www.zwpc.de/LogoKachel.jpg" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="5,25,0,0"/>
-        <Label Content="Ihre PC-Konfiguration" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Margin="0,10,0,0" Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="34"/>
-        <Label x:Name="Label_Keine_Kundenummer" Content="Sie haben keine Kundenummer angegeben !" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Foreground="Red" Margin="0,53,0,7" HorizontalContentAlignment="Center" FontSize="18" FontFamily="Arial Black"/>
-        <Button x:Name="Button_Keine_Kundenummer" Grid.Row="0" Grid.Column="3" Height="35" VerticalContentAlignment="Center" Width="Auto" BorderThickness="2" HorizontalContentAlignment="Right" Padding="0,0,5,0" Margin="42,80,58,4" RenderTransformOrigin="0.095,0.471" Background="#FF134997" BorderBrush="#FFFD0000" Click="Button_Click">
-            <StackPanel Orientation="Horizontal">
-                <Image HorizontalAlignment="Left" Width="30" Height="30" Source="pack://siteoforigin:,,,/Resources/icons8-achtung-48.png" Margin="0,0,20,0" Stretch="Uniform"/>
-                <Label Content="Jetzt ihre Kundenummer eintragen !" HorizontalAlignment="Right" Margin="-2,2,0,0" FontSize="12" FontWeight="Bold" Foreground="Wheat"></Label>
-            </StackPanel>
-        </Button>
-        <!-- ################ BUTTON definieren ##########################-->
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.RowSpan="6">
-            <Button x:Name="Email_Senden" Width="150" Height="30" Content="Email senden" Click="Send_Mail"/>
-            <Button x:Name="MSCONFIG" Width="150" Height="30" Margin="0,5,0,0" Click="MSConfig_oeffnen">
-                <StackPanel Orientation="Horizontal">
-                    
-                    <TextBlock Text="MSCONFIG starten" Margin="5"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
-
-
-        <!--  #################    Geräte-Art   **Row 1**    ###############################-->
-        <Label Grid.Row="1" Grid.Column="2" Content="Geräte-Art :" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="1" Grid.Column="3" x:Name="lbl_Geraete_Art" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-
-        <!--  #################     Hersteller   **Row 2**    ###############################-->
-        <Label Grid.Row="2" Grid.Column="2" Content="Hersteller:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="2" Grid.Column="3" x:Name="lbl_Hersteller" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     Modell 1   **Row 3**    ###############################-->
-        <Label Grid.Row="3" Grid.Column="2" Content="Modell 1:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="3" Grid.Column="3" x:Name="lbl_Modell1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     Modell 2   **Row 4**    ###############################-->
-        <Label Grid.Row="4" Grid.Column="2" Content="Modell 2:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="4" Grid.Column="3" x:Name="lbl_Modell2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="4" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     Seriennummer   **Row 5**    ###############################-->
-        <Label Grid.Row="5" Grid.Column="2" Content="Seriennummer:" VerticalAlignment="Center" HorizontalAlignment="Right" />
-        <Label Grid.Row="5" Grid.Column="3" x:Name="lbl_Seriennummer" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <Border Grid.Row="5" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent" />
-        <Border Grid.Row="5" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent" />
-        <!--  #################     Prozessor  **Row 6**    ###############################-->
-        <Label Grid.Row="6" Grid.Column="2" Content="Prozessor:" VerticalAlignment="Center" HorizontalAlignment="Right" />
-        <Label Grid.Row="6" Grid.Column="3" x:Name="lbl_Prozessor" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <Border Grid.Row="6" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent" />
-        <Border Grid.Row="6" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent" />
-        <!--  #################     RAM Total GB  **Row 7**    ###############################-->
-        <Label Grid.Row="7" Grid.Column="2" Content="RAM-Total:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="7" Grid.Column="3" x:Name="lbl_RAM_TOTAL" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="7" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="7" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     RAM Bänke  **Row 8**    ###############################-->
-        <Label Grid.Row="8" Grid.Column="2" Content="RAM-Bänke:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="8" Grid.Column="3" x:Name="lbl_RAM_SLOTS" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="8" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="8" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     RAM TYP  **Row 9**    ###############################-->
-        <Label Grid.Row="9" Grid.Column="2" Content="RAM-Typ:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="9" Grid.Column="3" x:Name="lbl_RAM_TYP" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="9" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="9" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     1.Grafikkarte  **Row 10**    ###############################-->
-        <Label Grid.Row="10" Grid.Column="2" Content="Grafikkarte:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="10" Grid.Column="3" x:Name="lbl_GRAKA1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="10" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="10" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     1. Graka Resolution  **Row 11**    ###############################-->
-        <Label Grid.Row="11" Grid.Column="2" Content="Auflösung:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="11" Grid.Column="3" x:Name="lbl_Resolution" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="11" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="11" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     Mainboard  **Row 12**    ###############################-->
-        <Label Grid.Row="12" Grid.Column="2" Content="Mainboard:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="12" Grid.Column="3" x:Name="lbl_Mainboard" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="12" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="12" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     1. HDD  **Row 13**    ###############################-->
-        <Label Grid.Row="13" Grid.Column="2" Content="HDD 1:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="13" Grid.Column="3" x:Name="lbl_HDD1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="13" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="13" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     2. HDD  **Row 14**    ###############################-->
-        <Label Grid.Row="14" Grid.Column="2" Content="HDD 2:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="14" Grid.Column="3" x:Name="lbl_HDD2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="14" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="14" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     3. HDD  **Row 15**    ###############################-->
-        <Label Grid.Row="15" Grid.Column="2" Content="HDD 3:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="15" Grid.Column="3" x:Name="lbl_HDD3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="15" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="15" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     1. DVD  **Row 16**    ###############################-->
-        <Label Grid.Row="16" Grid.Column="2" Content="DVD 1:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="16" Grid.Column="3" x:Name="lbl_DVD1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="16" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="16" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     2. DVD  **Row 17**    ###############################-->
-        <Label Grid.Row="17" Grid.Column="2" Content="DVD 2:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="17" Grid.Column="3" x:Name="lbl_DVD2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="17" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="17" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     OS-VERSION  **Row 18**    ###############################-->
-        <Label Grid.Row="18" Grid.Column="2" Content="OS-Version:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="18" Grid.Column="3" x:Name="lbl_OS_Version" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="18" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0" Background="Transparent"/>
-        <Border Grid.Row="18" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,0" Background="Transparent"/>
-        <!--  #################     Windows Lizenznummer   **Row 19**    ###############################-->
-        <Label Grid.Row="19" Grid.Column="2" Content="OS-Lizenz:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="19" Grid.Column="3" x:Name="lbl_OS_Lizenznummer" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="19" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,1" Background="Transparent"/>
-        <Border Grid.Row="19" Grid.Column="3" BorderBrush="Black" BorderThickness="0,1,1,1" Background="Transparent"/>
-        <!--  #################     Eigene Serial   **Row 20**    ###############################-->
-        <Label Grid.Row="20" Grid.Column="2" Background="LightGray"  Content="Reg Serial:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="20" Grid.Column="3" Background="LightGray"  x:Name="Reg_Wert_Serial" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="20" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
-        <Border Grid.Row="20" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
-        <!--  #################     Eigene Serial   **Row 21**    ###############################-->
-        <Label Grid.Row="21" Grid.Column="2" Background="LightGray"  Content="Reg Proz-ID:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="21" Grid.Column="3" Background="LightGray"  x:Name="Reg_Wert_Proz_ID" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="21" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
-        <Border Grid.Row="21" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
-        <!--  #################     Eigene Serial   **Row 22**    ###############################-->
-        <Label Grid.Row="22" Grid.Column="2" Background="LightGray" Content="Reg Eintragungsdatum:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <Label Grid.Row="22" Grid.Column="3" Background="LightGray" x:Name="Reg_Wert_Datum" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Border Grid.Row="22" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1" Background="Transparent"/>
-        <Border Grid.Row="22" Grid.Column="3" BorderBrush="Black" BorderThickness="0,0,1,1" Background="Transparent"/>
+        <Image Source="https://www.zwpc.de/LogoKachel.jpg" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,25,876,0" Height="127"/>
+         <!-- ################ BUTTON definieren ##########################-->
 
 
 
 
-        <Menu x:Name="menu" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="792" Grid.ColumnSpan="4">
-            <MenuItem Header="Datei">
+
+
+        <Menu x:Name="menu" HorizontalAlignment="Left" Height="30" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="{Binding ElementName=Grid,Path=ActualWidth}">
+            <MenuItem Header="Datei" Height="30">
                 <MenuItem Header="Bearbeiten"/>
                 <MenuItem Header="Kopieren"/>
                 <MenuItem Header="Speichern"/>
@@ -221,6 +60,155 @@
         </Menu>
 
         <Border x:Name="Splash" Opacity=".1" Visibility="Collapsed" Background="Black"/>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="4,162,0,0" TabStripPlacement="Left" Width="900">
+            <TabItem Header="Computerdaten" Margin="-2,-2,0,0" Height="50">
+
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="648*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="30*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--  #################    Geräte-Art   **Row 1**    ###############################-->
+                    <Label Grid.Row="0" Grid.Column="0" Content="Geräte-Art :" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="0" Grid.Column="1" x:Name="lbl_Geraete_Art" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    <!--  #################     Hersteller   **Row 2**    ###############################-->
+                    <Label Grid.Row="1" Grid.Column="0" Content="Hersteller:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="1" Grid.Column="1" x:Name="lbl_Hersteller" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Modell 1   **Row 3**    ###############################-->
+                    <Label Grid.Row="2" Grid.Column="0" Content="Modell 1:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="2" Grid.Column="1" x:Name="lbl_Modell1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Modell 2   **Row 4**    ###############################-->
+                    <Label Grid.Row="3" Grid.Column="0" Content="Modell 2:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="3" Grid.Column="1" x:Name="lbl_Modell2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Seriennummer   **Row 5**    ###############################-->
+                    <Label Grid.Row="4" Grid.Column="0" Content="Seriennummer:" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                    <Label Grid.Row="4" Grid.Column="1" x:Name="lbl_Seriennummer" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <!--  #################     Prozessor  **Row 6**    ###############################-->
+                    <Label Grid.Row="5" Grid.Column="0" Content="Prozessor:" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                    <Label Grid.Row="5" Grid.Column="1" x:Name="lbl_Prozessor" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <!--  #################     RAM Total GB  **Row 7**    ###############################-->
+                    <Label Grid.Row="6" Grid.Column="0" Content="RAM-Total:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="6" Grid.Column="1" x:Name="lbl_RAM_TOTAL" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     RAM Bänke  **Row 8**    ###############################-->
+                    <Label Grid.Row="7" Grid.Column="0" Content="RAM-Bänke:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="7" Grid.Column="1" x:Name="lbl_RAM_SLOTS" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     RAM TYP  **Row 9**    ###############################-->
+                    <Label Grid.Row="8" Grid.Column="0" Content="RAM-Typ:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="8" Grid.Column="1" x:Name="lbl_RAM_TYP" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     1.Grafikkarte  **Row 10**    ###############################-->
+                    <Label Grid.Row="9" Grid.Column="0" Content="Grafikkarte:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="9" Grid.Column="1" x:Name="lbl_GRAKA1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     1. Graka Resolution  **Row 11**    ###############################-->
+                    <Label Grid.Row="10" Grid.Column="0" Content="Auflösung:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="10" Grid.Column="1" x:Name="lbl_Resolution" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Mainboard  **Row 12**    ###############################-->
+                    <Label Grid.Row="11" Grid.Column="0" Content="Mainboard:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="11" Grid.Column="1" x:Name="lbl_Mainboard" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     1. HDD  **Row 13**    ###############################-->
+                    <Label Grid.Row="12" Grid.Column="0" Content="HDD 1:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="12" Grid.Column="1" x:Name="lbl_HDD1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     2. HDD  **Row 14**    ###############################-->
+                    <Label Grid.Row="13" Grid.Column="0" Content="HDD 2:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="13" Grid.Column="1" x:Name="lbl_HDD2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     3. HDD  **Row 15**    ###############################-->
+                    <Label Grid.Row="14" Grid.Column="0" Content="HDD 3:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="14" Grid.Column="1" x:Name="lbl_HDD3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     1. DVD  **Row 16**    ###############################-->
+                    <Label Grid.Row="15" Grid.Column="0" Content="DVD 1:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="15" Grid.Column="1" x:Name="lbl_DVD1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     2. DVD  **Row 17**    ###############################-->
+                    <Label Grid.Row="16" Grid.Column="0" Content="DVD 2:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="16" Grid.Column="1" x:Name="lbl_DVD2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     OS-VERSION  **Row 18**    ###############################-->
+                    <Label Grid.Row="17" Grid.Column="0" Content="OS-Version:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="17" Grid.Column="1" x:Name="lbl_OS_Version" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Windows Lizenznummer   **Row 19**    ###############################-->
+                    <Label Grid.Row="18" Grid.Column="0" Content="OS-Lizenz:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="18" Grid.Column="1" x:Name="lbl_OS_Lizenznummer" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Eigene Serial   **Row 20**    ###############################-->
+                    <Label Grid.Row="19" Grid.Column="0" Background="LightGray"  Content="Reg Serial:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="19" Grid.Column="1" Background="LightGray"  x:Name="Reg_Wert_Serial" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Eigene Serial   **Row 21**    ###############################-->
+                    <Label Grid.Row="20" Grid.Column="0" Background="LightGray"  Content="Reg Proz-ID:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="20" Grid.Column="1" Background="LightGray"  x:Name="Reg_Wert_Proz_ID" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <!--  #################     Eigene Serial   **Row 22**    ###############################-->
+                    <Label Grid.Row="21" Grid.Column="0" Background="LightGray" Content="Reg Eintragungsdatum:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Label Grid.Row="21" Grid.Column="1" Background="LightGray" x:Name="Reg_Wert_Datum" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Label Content="Ihre PC-Konfiguration" Margin="308,2,15,2" Foreground="RoyalBlue" FontWeight="Light" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="34" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5" Width="314">
+                        <Label.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="18.12"/>
+                                <RotateTransform Angle="10.563"/>
+                                <TranslateTransform X="-8.166" Y="-4.156"/>
+                            </TransformGroup>
+                        </Label.RenderTransform>
+                    </Label>
+
+
+
+
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Aktionen" Height="50">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="button" Content="MSConfig öffnen" HorizontalAlignment="Left" Click="MSConfig_oeffnen" Margin="17,8,0,0" VerticalAlignment="Top" Width="155" Height="40"/>
+                    <Button x:Name="button1" Content="Email senden" Click="Send_Mail" HorizontalAlignment="Left" Margin="18,50,0,0" VerticalAlignment="Top" Width="155" Height="40"/>
+
+
+                </Grid>
+            </TabItem>
+
+
+            <TabItem Header="Programme" Height="50">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+            <TabItem Header="Downloads" Height="50">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+
+
+            <TabItem Header="Empfehlungen" Height="50">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+            <TabItem Header="Neuigkeiten" Height="50">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+
+        </TabControl>
+        <Button x:Name="button2" Click="Button_Click" Content="Button" HorizontalAlignment="Left" Margin="527,102,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 

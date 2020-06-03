@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
+﻿using Konfiguration_WPF.API;
+using Microsoft.VisualBasic.CompilerServices;
 using Renci.SshNet.Messages;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,14 @@ namespace Konfiguration_WPF
 
             eigene_kdnr.Text = RegistryWert.Registry_Lesen("Kundennummer");
             eigene_kdnr.IsEnabled = false;
+
+            kd_nachname.Text = RegistryWert.Registry_Lesen("KD-Nachname");
+            kd_vorname.Text = RegistryWert.Registry_Lesen("KD-Vorname");
+            kd_strasse.Text = RegistryWert.Registry_Lesen("KD-Strasse");
+            kd_hsnr.Text = RegistryWert.Registry_Lesen("KD-HsNr");
+            kd_plz.Text = RegistryWert.Registry_Lesen("KD-PLZ");
+            kd_ort.Text = RegistryWert.Registry_Lesen("KD-Ort");
+            kd_email.Text = RegistryWert.Registry_Lesen("KD-Email");
 
             status.Text = "© 2019 - " + DateTime.Now.Year + " Computerservice Blasius Thomas";
         }
@@ -258,12 +267,8 @@ namespace Konfiguration_WPF
 
 
 
-            string from = ConfigurationManager.AppSettings["email_von_an"].ToString();
-            string to = ConfigurationManager.AppSettings["email_von_an"].ToString();
-            int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
-            string server = ConfigurationManager.AppSettings["email_Server"].ToString();
-            string betreff = "Programm-Einstellungen";
-            string passwort = ConfigurationManager.AppSettings["GhZfrgWRGwr57456DGWferGF$ZG"].ToString();
+            MessageBox.Show(Pfade.MAIL_PASS() + Environment.NewLine + Pfade.MAIL_SERVER() + Environment.NewLine + Pfade.MAIL_USER());
+
 
             string body = @"Rechner-Konfiguration" + Environment.NewLine;
             body += "Kundenname: " + kd_nachname.Text + " " + kd_vorname.Text + Environment.NewLine;
@@ -295,10 +300,10 @@ namespace Konfiguration_WPF
 
 
 
-            MailMessage message = new MailMessage(from, to, betreff, body);
-            var smtpClient = new SmtpClient(server, Convert.ToInt32(port))
+            MailMessage message = new MailMessage(Pfade.MAIL_USER(), Pfade.MAIL_USER(), "Einstellungen", body);
+            var smtpClient = new SmtpClient(Pfade.MAIL_SERVER(), 587)
             {
-                Credentials = new NetworkCredential(from, passwort),
+                Credentials = new NetworkCredential(Pfade.MAIL_USER(), Pfade.MAIL_PASS()),
                 EnableSsl = true
             };
             try

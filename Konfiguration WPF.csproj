@@ -109,6 +109,7 @@
     </ApplicationDefinition>
     <Compile Include="API\API.cs" />
     <Compile Include="API\Pfade.cs" />
+    <Compile Include="API\Utilitys.cs" />
     <Compile Include="Cryption.cs" />
     <Compile Include="Klassen\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>

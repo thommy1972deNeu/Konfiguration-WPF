@@ -1,13 +1,10 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.VisualBasic.Devices;
 using Microsoft.Win32;
-using Renci.SshNet.Messages;
 using System;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Management;
-using System.Runtime.CompilerServices;
-using System.Windows;
 
 namespace Konfiguration_WPF
 {
@@ -39,7 +36,7 @@ namespace Konfiguration_WPF
             try
             {
                 OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-                OleDbCommand cmd_key = new OleDbCommand("SELECT EncryptionKey FROM Config", con);
+                OleDbCommand cmd_key = new OleDbCommand("SELECT EncryptionKey FROM config", con);
                 con.Open();
                 object key = cmd_key.ExecuteScalar();
                 con.Close();
@@ -53,6 +50,84 @@ namespace Konfiguration_WPF
             }    
          }
 
+
+        public static string Mail_Key()
+        {
+
+            try
+            {
+                OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                OleDbCommand cmd_key = new OleDbCommand("SELECT email_pass FROM config", con);
+                con.Open();
+                object key = cmd_key.ExecuteScalar();
+                con.Close();
+                cmd_key.Dispose();
+                return key.ToString();
+            }
+            catch (Exception)
+            {
+                return null;
+
+            }
+        }
+
+        public static string Mail_Server()
+        {
+
+            try
+            {
+                OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                OleDbCommand cmd_key = new OleDbCommand("SELECT mail_server FROM config", con);
+                con.Open();
+                object key = cmd_key.ExecuteScalar();
+                con.Close();
+                cmd_key.Dispose();
+                return key.ToString();
+            }
+            catch (Exception)
+            {
+                return null;
+
+            }
+        }
+
+        public static string Mail_User()
+        {
+
+            try
+            {
+                OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                OleDbCommand cmd_key = new OleDbCommand("SELECT mail_user FROM config", con);
+                con.Open();
+                object key = cmd_key.ExecuteScalar();
+                con.Close();
+                cmd_key.Dispose();
+                return key.ToString();
+            }
+            catch (Exception)
+            {
+                return null;
+
+            }
+        }
+        public static int Mail_Port()
+        {
+            try
+            {
+                OleDbConnection con = new OleDbConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                OleDbCommand cmd_key = new OleDbCommand("SELECT mail_port FROM config", con);
+                con.Open();
+                object key = cmd_key.ExecuteScalar();
+                con.Close();
+                cmd_key.Dispose();
+                return Convert.ToInt32(key);
+            }
+            catch (Exception)
+            {
+                return 0;
+
+            }
+        }
 
         public static string CPU_NAME()
         {
@@ -74,6 +149,25 @@ namespace Konfiguration_WPF
            
         }
 
+
+        public static string COMPUTER_SYSTEM_UUID()
+        {
+            try
+            {
+                var name = String.Empty;
+                ManagementObjectSearcher cpu = new ManagementObjectSearcher("select * from Win32_ComputerSystemProduct");
+                ManagementObjectCollection moc = cpu.Get();
+                foreach (ManagementObject mo in moc)
+                {
+                    name = mo["UUID"].ToString();
+                }
+                return name;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
 
 

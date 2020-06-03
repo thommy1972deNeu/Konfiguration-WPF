@@ -1,7 +1,9 @@
-﻿using Konfiguration_WPF.Seiten;
+﻿using Konfiguration_WPF.API;
+using Konfiguration_WPF.Seiten;
 using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Management;
@@ -25,7 +27,8 @@ namespace Konfiguration_WPF
 
             InitializeComponent();
 
-     
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
 
                 // ######################################################################
                 // ################# Ausgaben definieren !! #############################
@@ -35,6 +38,8 @@ namespace Konfiguration_WPF
                 HDD1();
                 HDD2();
                 HDD3();
+            
+
 
 
                 // #############################################
@@ -44,8 +49,9 @@ namespace Konfiguration_WPF
                 {
                     RegistryKey key;
                     key = Registry.CurrentUser.CreateSubKey("Computerservice Blasius Thomas");
-                    key.SetValue("Kundennummer", "");
                     
+                    key.SetValue("Kundennummer", "");
+                    key.SetValue("UUID", RegistryWert.COMPUTER_SYSTEM_UUID());
                     key.SetValue("Serial", RegistryWert.SERIENNUMMER());
                     key.SetValue("Proz_ID", RegistryWert.CPU_ID());
                     key.SetValue("Datum", DateTime.Now);
@@ -111,6 +117,7 @@ namespace Konfiguration_WPF
 
             
         }
+
             public string Verschluesseln(string strOriginal)
             {
                 try
@@ -169,6 +176,24 @@ namespace Konfiguration_WPF
                     return null;
                 }
             }
+
+
+            public static string SECRET()
+            {
+                Pfade pf = new Pfade();
+                Dictionary<string, string> getParameters = new Dictionary<string, string>();
+                getParameters.Add("secret", Properties.Resources.Secret);
+                string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Config, getParameters);
+                string[] data = kdnr_response.Split(':');
+                if (kdnr_response.Length > 1)
+                {
+                    return data[0];
+                }
+                return null;
+            }
+
+
+
 
 
             public void SystemTyp()

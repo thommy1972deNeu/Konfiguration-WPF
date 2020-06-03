@@ -1,19 +1,8 @@
 ﻿using Konfiguration_WPF.API;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Konfiguration_WPF.Seiten
 {
@@ -57,8 +46,9 @@ namespace Konfiguration_WPF.Seiten
                 getParameters.Add("plz", txt_PLZ.Text);
                 getParameters.Add("ort", txt_Ort.Text);
                 getParameters.Add("email", txt_Email.Text);
+                getParameters.Add("UUID", RegistryWert.COMPUTER_SYSTEM_UUID());
 
-                string kdnr_response =  pf.HTTPSRequestGet(getParameters);
+                string kdnr_response =  pf.HTTPSRequestGet(pf.Pfad_Kd, getParameters);
                 string[] data = kdnr_response.Split(':');
 
                 if(kdnr_response.Length > 1)
@@ -72,9 +62,9 @@ namespace Konfiguration_WPF.Seiten
                     RegistryWert.Registry_Eintrag("KD-Ort", data[5]);
                     RegistryWert.Registry_Eintrag("KD-Email", data[6]);
 
-                    MessageBox.Show("Die Daten wurde gespeichert !" + Environment.NewLine + "Das Programm muss dazu Neu gestartet werden !", "Programm - Meldung!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Die Daten wurde gespeichert !" + Environment.NewLine + "Das Programm muss zum Speichern neu gestartet werden !", "Programm - Meldung!", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    Application.Current.Shutdown();
+                   
 
                 } else
                 {
@@ -94,7 +84,7 @@ namespace Konfiguration_WPF.Seiten
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Application.Current.Shutdown();
+      
         }
     }
 }
