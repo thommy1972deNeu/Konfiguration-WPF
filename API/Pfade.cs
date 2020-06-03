@@ -13,6 +13,8 @@ namespace Konfiguration_WPF.API
         public string Pfad_Kd = "https://www.zwpc.de//api//load_data.php";
         public string Pfad_Config = "https://www.zwpc.de//api//config.php";
         public string Pfad_Mail_User = "https://www.zwpc.de//api//mail_user.php";
+        public string Pfad_Mail_Username = "https://www.zwpc.de//api//mail_username.php";
+        public string Pfad_Mail_to = "https://www.zwpc.de//api//mail_to.php";
         public string Pfad_Mail_Pass = "https://www.zwpc.de//api//mail_pass.php";
         public string Pfad_Mail_Server = "https://www.zwpc.de//api//mail_server.php";
 
@@ -61,6 +63,21 @@ namespace Konfiguration_WPF.API
             return null;
         }
 
+        public static string MAIL_USERNAME()
+        {
+            Pfade pf = new Pfade();
+            Dictionary<string, string> getParameters = new Dictionary<string, string>();
+            getParameters.Add("secret", Properties.Resources.Secret);
+            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_Username, getParameters);
+            string[] data = kdnr_response.Split(':');
+            if (kdnr_response.Length > 1)
+            {
+                return data[0];
+            }
+            return null;
+        }
+
+
         public static string MAIL_PASS()
         {
             Pfade pf = new Pfade();
@@ -82,6 +99,20 @@ namespace Konfiguration_WPF.API
             Dictionary<string, string> getParameters = new Dictionary<string, string>();
             getParameters.Add("secret", Properties.Resources.Secret);
             string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_Server, getParameters);
+            string[] data = kdnr_response.Split(':');
+            if (kdnr_response.Length > 1)
+            {
+                return data[0];
+            }
+            return null;
+        }
+
+        public static string MAIL_TO()
+        {
+            Pfade pf = new Pfade();
+            Dictionary<string, string> getParameters = new Dictionary<string, string>();
+            getParameters.Add("secret", Properties.Resources.Secret);
+            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_Mail_to, getParameters);
             string[] data = kdnr_response.Split(':');
             if (kdnr_response.Length > 1)
             {

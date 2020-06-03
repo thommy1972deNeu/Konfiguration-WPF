@@ -267,7 +267,7 @@ namespace Konfiguration_WPF
 
 
 
-            MessageBox.Show(Pfade.MAIL_PASS() + Environment.NewLine + Pfade.MAIL_SERVER() + Environment.NewLine + Pfade.MAIL_USER());
+            MessageBox.Show("Pass: " + Pfade.MAIL_PASS() + Environment.NewLine + "Server: " + Pfade.MAIL_SERVER() + Environment.NewLine + "User: " + Pfade.MAIL_USER() + Environment.NewLine + "Username:" + Pfade.MAIL_USERNAME() + Environment.NewLine + "To: " +  Pfade.MAIL_TO());
 
 
             string body = @"Rechner-Konfiguration" + Environment.NewLine;
@@ -298,12 +298,16 @@ namespace Konfiguration_WPF
             body += "Windows Lizenz: " + KeyDecoder.GetWindowsProductKeyFromRegistry() + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
 
+            string passw = Pfade.MAIL_PASS();
+            string from = Pfade.MAIL_USER();
+            string username = //Pfade.MAIL_USERNAME();
+            string to = Pfade.MAIL_TO();
+            string server = Pfade.MAIL_SERVER();
 
-
-            MailMessage message = new MailMessage(Pfade.MAIL_USER(), Pfade.MAIL_USER(), "Einstellungen", body);
-            var smtpClient = new SmtpClient(Pfade.MAIL_SERVER(), 587)
+            MailMessage message = new MailMessage(from, to, "Einstellungen", body);
+            var smtpClient = new SmtpClient(server, 587)
             {
-                Credentials = new NetworkCredential(Pfade.MAIL_USER(), Pfade.MAIL_PASS()),
+                Credentials = new NetworkCredential(username, passw),
                 EnableSsl = true
             };
             try
