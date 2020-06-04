@@ -37,8 +37,8 @@ namespace Konfiguration_WPF
                 HDD1();
                 HDD2();
                 HDD3();
-            
 
+                    News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News.php"));
 
 
                 // #############################################
@@ -115,19 +115,7 @@ namespace Konfiguration_WPF
             // ############### Letzte Eigene Serial eintragen !! ####################
             // ######################################################################
 
-            Pfade pf = new Pfade();
-            Dictionary<string, string> getParameters = new Dictionary<string, string>();
-            getParameters.Add("secret", Properties.Resources.Secret);
-            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_NEWS, getParameters);
-            string[] data = kdnr_response.Split(':');
-            if (kdnr_response.Length > 1)
-            {
-                Text_Box_News.Text = "1" + data[0] + Environment.NewLine + data[1] + Environment.NewLine + "---------------------------------------------------------------------" + Environment.NewLine;
-            } else
-            {
-                Text_Box_News.Text = "Fehler !";
-            }
-          
+               
 
 
         }
@@ -487,6 +475,11 @@ namespace Konfiguration_WPF
         private void TabItem_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
         {
 
+        }
+
+        private void News_Update(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News.php"));
         }
     }
 

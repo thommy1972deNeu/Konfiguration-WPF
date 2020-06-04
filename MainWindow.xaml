@@ -66,8 +66,9 @@
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="4,162,0,0" TabStripPlacement="Left" Width="903">
             <TabItem Height="50">
                 <TabItem.Header>
-                    <Image Width="50" Source="Resources/icons8-newsleecher-100.png" ToolTip="Neuigkeiten"/>
+                    <Image Width="50" Source="Resources/icons8-newsleecher-100.png" ToolTip="Neuigkeiten" MouseDown="News_Update"/>
                 </TabItem.Header>
+                <WebBrowser x:Name="News_Browser"/>
             </TabItem>
 
             <TabItem Height="50">
@@ -75,7 +76,7 @@
                     <Image Width="50" Source="Resources/user_ok.png" ToolTip="Benutzerdaten" MouseDown="Image_MouseDown"/>
                 </TabItem.Header>
                 <StackPanel>
-                    <TextBlock x:Name="Text_Box_News"/>
+                    <WebBrowser x:Name="User_Browser"/>
                 </StackPanel>
 
             </TabItem>
