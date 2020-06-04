@@ -82,7 +82,7 @@
             </TabItem>
 
             <TabItem Margin="-2,-2,0,0" Height="50">
-                                
+
                 <TabItem.Header>
                     <Image Width="50" Source="Resources/icons8-computer-64.png" ToolTip="Ihr Computer-System"/>
                 </TabItem.Header>
@@ -259,9 +259,18 @@
                     </Button>
                 </Grid>
             </TabItem>
-          
+
         </TabControl>
-        <Button x:Name="button2" Click="Button_Click" Content="Button" HorizontalAlignment="Left" Margin="527,102,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="KDNR_Fehlt_Button" BorderThickness="0" Content="Jetzt die fehlenden Daten nachtragen !" FontSize="20" Click="Button_Click" HorizontalAlignment="Left" Margin="370,69,0,0" VerticalAlignment="Top" Width="533" Height="85">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#FFD87726" Offset="0.658"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Label x:Name="Label_Gruss" Content="Label" HorizontalAlignment="Left" Margin="751,30,0,0" VerticalAlignment="Top" Width="417" HorizontalContentAlignment="Right"/>
 
     </Grid>
 
