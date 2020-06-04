@@ -287,6 +287,7 @@ namespace Konfiguration_WPF
             body += "Windows Version: " + RegistryWert.GetWindwosClientVersion() + Environment.NewLine;
             body += "Windows Lizenz: " + KeyDecoder.GetWindowsProductKeyFromRegistry() + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
+            body += "PC-UUID: " + RegistryWert.COMPUTER_SYSTEM_UUID();
 
             Pfade.MAIL_USER();
 

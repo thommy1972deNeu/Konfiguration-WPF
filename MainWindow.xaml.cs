@@ -41,6 +41,7 @@ namespace Konfiguration_WPF
 
                 // ################# News Browser starten ##########################
                 News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News.php"));
+            User_Browser.Navigate(new Uri("http://www.zwpc.de/api/Userdaten.php?kdnr=" + RegistryWert.Registry_Lesen("Kundennummer")));
 
 
                 // #############################################
@@ -48,6 +49,8 @@ namespace Konfiguration_WPF
                 // #############################################
             if (Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", null) == null)
                 {
+                RegistryWert.Registry_Eintrag("PC-UUID", RegistryWert.COMPUTER_SYSTEM_UUID());
+
                     RegistryKey key;
                     key = Registry.CurrentUser.CreateSubKey("Computerservice Blasius Thomas");
                     
@@ -62,6 +65,7 @@ namespace Konfiguration_WPF
                 }
                 else
                 {
+                     RegistryWert.Registry_Eintrag("PC-UUID", RegistryWert.COMPUTER_SYSTEM_UUID());
                     Reg_Wert_Serial.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Serial", true);
                     Reg_Wert_Proz_ID.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Proz_ID", true);
                     Reg_Wert_Datum.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", true) + " Uhr";

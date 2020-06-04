@@ -76,7 +76,7 @@
                     <Image Width="50" Source="Resources/user_ok.png" ToolTip="Benutzerdaten" MouseDown="Image_MouseDown"/>
                 </TabItem.Header>
                 <StackPanel>
-                    <WebBrowser x:Name="User_Browser"/>
+                    <WebBrowser x:Name="User_Browser" Height="740"/>
                 </StackPanel>
 
             </TabItem>
