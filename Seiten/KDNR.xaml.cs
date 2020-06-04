@@ -67,7 +67,7 @@ namespace Konfiguration_WPF.Seiten
 
                 } else
                 {
-                    MessageBox.Show("Wir konnten leider keine Personendaten zu ihrer angegebenden Kundenummer finden !" + Environment.NewLine + "Bitte versuchen Sie es noch einmal oder Kontaktieren Sie mich.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Wir konnten leider keine Personendaten zu ihrer angegebenden Kundennummer finden !" + Environment.NewLine + "Bitte versuchen Sie es noch einmal oder Kontaktieren Sie mich.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
 

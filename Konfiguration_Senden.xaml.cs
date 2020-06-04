@@ -265,7 +265,7 @@ namespace Konfiguration_WPF
             body += "KD Adresse: " + Environment.NewLine;
             body += kd_strasse.Text + " " + kd_hsnr.Text + Environment.NewLine;
             body += kd_plz.Text + " " + kd_ort.Text + Environment.NewLine;
-            body += "Kundenummer: " + eigene_kdnr.Text + Environment.NewLine;
+            body += "Kundennummer: " + eigene_kdnr.Text + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
             body += "Antiviren-Software: " + antivirenprogramm.Text + Environment.NewLine;
             body += " ################################################################################" + Environment.NewLine;
@@ -291,7 +291,7 @@ namespace Konfiguration_WPF
             Pfade.MAIL_USER();
 
 
-            MailMessage message = new MailMessage(Pfade.Mail_from, Pfade.Mail_to, "Einstellungen von " + RegistryWert.Registry_Lesen("KD-Nachname") + " " + RegistryWert.Registry_Lesen("KD-Vornname"), body);
+            MailMessage message = new MailMessage(Pfade.Mail_from, Pfade.Mail_to, "Einstellungen von " + RegistryWert.Registry_Lesen("KD-Nachname") + " " + RegistryWert.Registry_Lesen("KD-Vorname"), body);
             var smtpClient = new SmtpClient(Pfade.Mail_server, Pfade.Mail_port)
             {
                 Credentials = new NetworkCredential(Pfade.Mail_username, Pfade.Mail_pass),

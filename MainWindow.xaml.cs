@@ -5,13 +5,14 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Management;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Media;
 using System.Windows.Media.Effects;
 
 namespace Konfiguration_WPF
@@ -38,14 +39,8 @@ namespace Konfiguration_WPF
                 HDD2();
                 HDD3();
 
-                try
-                {
-                    News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News.php"));
-
-                } catch
-                {
-                    News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News_Failed.php"));
-                }
+                // ################# News Browser starten ##########################
+                News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News.php"));
 
 
                 // #############################################
@@ -73,7 +68,40 @@ namespace Konfiguration_WPF
 
                 }
 
-                RegistryWert.Registry_Eintrag("Impulserhaltungssatz", DateTime.Now.Date.ToString());
+            // ##########  Button einblenden wenn KDNR = ""
+
+            int Fehler = 0;
+            if (RegistryWert.Registry_Lesen("Kundennummer") == "") Fehler++;
+
+            if (RegistryWert.Registry_Lesen("Nachname") == "") Fehler++;
+
+            if (RegistryWert.Registry_Lesen("Vorname") == "") Fehler++;
+
+            if (RegistryWert.Registry_Lesen("Strasse") == "") Fehler++;
+
+            if (RegistryWert.Registry_Lesen("HsNr") == "") Fehler++;
+
+            if (RegistryWert.Registry_Lesen("PLZ") == "") Fehler++;
+
+            if (RegistryWert.Registry_Lesen("Ort") == "") Fehler++;
+
+            if (RegistryWert.Registry_Lesen("Email") == "") Fehler++;
+
+
+            if (Fehler >= 1)
+            {
+                Label_Gruss.Content = "Es fehlen noch Angaben in ihrem Kundenkonto !";
+                KDNR_Fehlt_Button.Visibility = Visibility.Visible;
+               
+            } else
+            {
+                KDNR_Fehlt_Button.Visibility = Visibility.Hidden;
+            }
+                
+
+      
+
+            RegistryWert.Registry_Eintrag("Impulserhaltungssatz", DateTime.Now.Date.ToString());
 
                 lbl_OS_Lizenznummer.Content = KeyDecoder.GetWindowsProductKeyFromRegistry();
                 RegistryWert.Registry_Eintrag("Windows-Lizenz", KeyDecoder.GetWindowsProductKeyFromRegistry());
@@ -488,6 +516,8 @@ namespace Konfiguration_WPF
         {
             News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News.php"));
         }
+
+     
     }
 
     

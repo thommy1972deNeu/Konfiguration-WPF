@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Konfiguration_WPF.Seiten"
         mc:Ignorable="d"
-        Title="Bitte geben Sie ihre Kundenummer ein..." Height="493.033" Width="895.902" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        Title="Bitte geben Sie ihre Kundennummer ein..." Height="493.033" Width="895.902" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Effect>
         <DropShadowEffect/>
     </Window.Effect>
