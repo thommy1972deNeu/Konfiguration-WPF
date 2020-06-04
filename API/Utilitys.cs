@@ -12,6 +12,9 @@ namespace Konfiguration_WPF.API
 {
      public class Utilitys
     {
+        
 
+        
+        
     }
 }

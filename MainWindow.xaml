@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Konfiguration_WPF"
         mc:Ignorable="d"
-        Title="Konfigurationstool" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" Width="1214">
+        Title="Konfigurationstool" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Width="1214" Height="967" Icon="icon2.ico">
 
     <Grid x:Name="Grid" Margin="0,0,0,28">
+        <Grid.Background>
+            <ImageBrush AlignmentX="Right" AlignmentY="Bottom" ImageSource="Resources/back_png.png" Stretch="None"/>
+        </Grid.Background>
 
 
 
 
         <!-- ################## WERBUNG #########################-->
         <Image Source="https://www.zwpc.de/LogoKachel.jpg" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,25,876,0" Height="127"/>
-         <!-- ################ BUTTON definieren ##########################-->
+        <!-- ################ BUTTON definieren ##########################-->
 
 
 
@@ -60,10 +63,27 @@
         </Menu>
 
         <Border x:Name="Splash" Opacity=".1" Visibility="Collapsed" Background="Black"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="4,162,0,0" TabStripPlacement="Left" Width="900">
-            <TabItem Margin="-2,-2,0,0" Height="50" >
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="4,162,0,0" TabStripPlacement="Left" Width="903">
+            <TabItem Height="50">
                 <TabItem.Header>
-                    <Image Width="50" Source="Resources/icons8-enterprise-ressourcenplanung-96.png"/>
+                    <Image Width="50" Source="Resources/icons8-newsleecher-100.png" ToolTip="Neuigkeiten"/>
+                </TabItem.Header>
+            </TabItem>
+
+            <TabItem Height="50">
+                <TabItem.Header>
+                    <Image Width="50" Source="Resources/user_ok.png" ToolTip="Benutzerdaten" MouseDown="Image_MouseDown"/>
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock x:Name="Text_Box_News"/>
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem Margin="-2,-2,0,0" Height="50">
+                                
+                <TabItem.Header>
+                    <Image Width="50" Source="Resources/icons8-computer-64.png" ToolTip="Ihr Computer-System"/>
                 </TabItem.Header>
 
                 <Grid Background="#FFE5E5E5">
@@ -184,7 +204,7 @@
             </TabItem>
             <TabItem Height="50">
                 <TabItem.Header>
-                    <Image Source="Resources/icons8-thor-256.png" Width="50"/>
+                    <Image Source="Resources/icons8-thor-256.png" Width="50" ToolTip="Aktionen"/>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
                     <Button x:Name="button" Content="MSConfig öffnen" HorizontalAlignment="Left" Click="MSConfig_oeffnen" Margin="17,8,0,0" VerticalAlignment="Top" Width="155" Height="40"/>
@@ -195,24 +215,50 @@
             </TabItem>
 
 
-            <TabItem Header="Programme" Height="50">
+            <TabItem Height="50">
+                <TabItem.Header>
+                    <Image Source="Resources/icons8-downloads-100.png" Width="50" ToolTip="Downloads und Links"/>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
 
-            <TabItem Header="Downloads" Height="50">
+            <TabItem Height="50">
+                <TabItem.Header>
+                    <Image Source="Resources/icons8-anfang-128.png" Width="50" ToolTip="Autostart-Programme"/>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
 
 
 
-            <TabItem Header="Empfehlungen" Height="50">
+            <TabItem Height="50">
+                <TabItem.Header>
+                    <Image Source="Resources/icons8-hinweis-64.png" Width="50" ToolTip="Hinweise für Sie"/>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
 
-            <TabItem Header="Neuigkeiten" Height="50">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Height="50">
+                <TabItem.Header>
+                    <Image Source="Resources/icons8-fingerabdruck-96.png" Width="50" ToolTip="Impressum und Rechtliches"/>
+                </TabItem.Header>
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="Datenschutz_Button" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="21,15,0,0" VerticalAlignment="Top" Width="179" Height="29" Click="Datenschutz_Button_Click">
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <Image Source="Resources/icons8-paragraph-26.png" Width="25" Margin="0,0,20,0"/>
+                            <TextBlock VerticalAlignment="Center">Datenschutzerklärung</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <WebBrowser x:Name="Web_Browser_1" HorizontalAlignment="Left" Margin="19,67,0,0" VerticalAlignment="Top" Source="https://www.zwpc.de/api/Impressum.php" />
+                    <Button x:Name="Impressum_Button2" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="211,15,0,0" VerticalAlignment="Top" Width="121" Height="29" Click="Impressum_Button">
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <Image Source="Resources/icons8-paragraph-26.png" Width="25" Margin="0,0,20,0"/>
+                            <TextBlock VerticalAlignment="Center" Text="Impressum"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
             </TabItem>
-
+          
         </TabControl>
         <Button x:Name="button2" Click="Button_Click" Content="Button" HorizontalAlignment="Left" Margin="527,102,0,0" VerticalAlignment="Top" Width="75"/>
 

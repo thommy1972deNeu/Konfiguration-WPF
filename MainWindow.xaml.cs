@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+
 using System.Windows.Media.Effects;
 
 namespace Konfiguration_WPF
@@ -19,7 +20,7 @@ namespace Konfiguration_WPF
     public partial class MainWindow : Window
     {
 
-
+        public static string Impressum;
         // ###########################################################
         // ###########################################################
         public MainWindow()
@@ -27,8 +28,6 @@ namespace Konfiguration_WPF
 
             InitializeComponent();
 
-            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
-            MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
 
                 // ######################################################################
                 // ################# Ausgaben definieren !! #############################
@@ -56,12 +55,15 @@ namespace Konfiguration_WPF
                     key.SetValue("Proz_ID", RegistryWert.CPU_ID());
                     key.SetValue("Datum", DateTime.Now);
                     key.Close();
+
+               
                 }
                 else
                 {
                     Reg_Wert_Serial.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Serial", true);
                     Reg_Wert_Proz_ID.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Proz_ID", true);
                     Reg_Wert_Datum.Content = Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", true) + " Uhr";
+
                 }
 
                 RegistryWert.Registry_Eintrag("Impulserhaltungssatz", DateTime.Now.Date.ToString());
@@ -109,13 +111,25 @@ namespace Konfiguration_WPF
                 lbl_OS_Version.Content = RegistryWert.GetWindwosClientVersion();
                 RegistryWert.Registry_Eintrag("Windows-Version", RegistryWert.GetWindwosClientVersion());
 
-                // ######################################################################
-                // ############### Letzte Eigene Serial eintragen !! ####################
-                // ######################################################################
+            // ######################################################################
+            // ############### Letzte Eigene Serial eintragen !! ####################
+            // ######################################################################
+
+            Pfade pf = new Pfade();
+            Dictionary<string, string> getParameters = new Dictionary<string, string>();
+            getParameters.Add("secret", Properties.Resources.Secret);
+            string kdnr_response = pf.HTTPSRequestGet(pf.Pfad_NEWS, getParameters);
+            string[] data = kdnr_response.Split(':');
+            if (kdnr_response.Length > 1)
+            {
+                Text_Box_News.Text = "1" + data[0] + Environment.NewLine + data[1] + Environment.NewLine + "---------------------------------------------------------------------" + Environment.NewLine;
+            } else
+            {
+                Text_Box_News.Text = "Fehler !";
+            }
+          
 
 
-
-            
         }
 
             public string Verschluesseln(string strOriginal)
@@ -452,6 +466,27 @@ namespace Konfiguration_WPF
         {
             KDNR nr2 = new KDNR();
             nr2.Show();
+        }
+
+        private void Datenschutz_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Web_Browser_1.Navigate(new Uri("https://www.zwpc.de/api/Datenschutz.php"));
+        }
+
+        private void Impressum_Button(object sender, RoutedEventArgs e)
+        {
+            Web_Browser_1.Navigate(new Uri("https://www.zwpc.de/api/Impressum.php"));
+        }
+
+        private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+
+        }
+
+        private void TabItem_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+
         }
     }
 

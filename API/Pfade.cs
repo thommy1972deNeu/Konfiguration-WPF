@@ -15,11 +15,8 @@ namespace Konfiguration_WPF.API
         
         public string Pfad_Kd = "https://www.zwpc.de//api//load_data.php";
         public string Pfad_Config = "https://www.zwpc.de//api//config.php";
-        //public string Pfad_Mail_User = "https://www.zwpc.de//api//mail_user.php";
-        //public string Pfad_Mail_Username = "https://www.zwpc.de//api//mail_username.php";
-        //public string Pfad_Mail_to = "https://www.zwpc.de//api//mail_to.php";
-        //public string Pfad_Mail_Pass = "https://www.zwpc.de//api//mail_pass.php";
-        //public string Pfad_Mail_Server = "https://www.zwpc.de//api//mail_server.php";
+        public string Pfad_NEWS = "https://www.zwpc.de//api//News.php";
+
 
         public string Pfad_Mail_Data = "https://www.zwpc.de//api//mail_data.php";
         
@@ -31,6 +28,10 @@ namespace Konfiguration_WPF.API
         public static string Mail_to { get; set; }
         public static int Mail_port { get; set; }
         public static string Mail_pass { get; set; }
+
+        public static string News_Titel { get; set; }
+
+        public static string News_Text { get; set; }
 
         public string HTTPSRequestGet(string url, Dictionary<string, string> getParameters = null)
         {
@@ -75,6 +76,8 @@ namespace Konfiguration_WPF.API
             }
 
         }
+
+
 
     }
 
