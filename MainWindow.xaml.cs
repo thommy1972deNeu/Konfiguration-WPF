@@ -38,13 +38,20 @@ namespace Konfiguration_WPF
                 HDD2();
                 HDD3();
 
+                try
+                {
                     News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News.php"));
+
+                } catch
+                {
+                    News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News_Failed.php"));
+                }
 
 
                 // #############################################
                 // ########### Registry Wert eintragen #########
                 // #############################################
-                if (Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", null) == null)
+            if (Registry.GetValue(ConfigurationManager.AppSettings["Reg_URI"].ToString(), "Datum", null) == null)
                 {
                     RegistryKey key;
                     key = Registry.CurrentUser.CreateSubKey("Computerservice Blasius Thomas");
