@@ -44,7 +44,7 @@ namespace Konfiguration_WPF
 
                 } catch
                 {
-                    News_Browser.Navigate(new Uri("https://www.zwpc.de/api/News_Failed.php"));
+                News_Browser.Visibility = Visibility.Collapsed;
                 }
 
 
