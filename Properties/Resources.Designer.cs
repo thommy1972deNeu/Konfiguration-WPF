@@ -71,6 +71,36 @@ namespace Konfiguration_WPF.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_enterprise_ressourcenplanung_96 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_enterprise_ressourcenplanung_96", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_nachrichten_256 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_nachrichten_256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_thor_256 {
+            get {
+                object obj = ResourceManager.GetObject("icons8_thor_256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 3hvA&amp;Bclc0E&amp;eEvqQfFwkS2sr#y5R54Xm%Oc#RU1FK ähnelt.
         /// </summary>
         internal static string Secret {

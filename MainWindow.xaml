@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Konfiguration_WPF"
         mc:Ignorable="d"
-        Title="Konfigurationstool" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize">
+        Title="Konfigurationstool" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" Width="1214">
 
     <Grid x:Name="Grid" Margin="0,0,0,28">
 
@@ -61,7 +61,10 @@
 
         <Border x:Name="Splash" Opacity=".1" Visibility="Collapsed" Background="Black"/>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Panel.ZIndex="1" Margin="4,162,0,0" TabStripPlacement="Left" Width="900">
-            <TabItem Header="Computerdaten" Margin="-2,-2,0,0" Height="50">
+            <TabItem Margin="-2,-2,0,0" Height="50" >
+                <TabItem.Header>
+                    <Image Width="50" Source="Resources/icons8-enterprise-ressourcenplanung-96.png"/>
+                </TabItem.Header>
 
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -179,7 +182,10 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Aktionen" Height="50">
+            <TabItem Height="50">
+                <TabItem.Header>
+                    <Image Source="Resources/icons8-thor-256.png" Width="50"/>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
                     <Button x:Name="button" Content="MSConfig öffnen" HorizontalAlignment="Left" Click="MSConfig_oeffnen" Margin="17,8,0,0" VerticalAlignment="Top" Width="155" Height="40"/>
                     <Button x:Name="button1" Content="Email senden" Click="Send_Mail" HorizontalAlignment="Left" Margin="18,50,0,0" VerticalAlignment="Top" Width="155" Height="40"/>

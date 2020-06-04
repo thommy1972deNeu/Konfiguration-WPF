@@ -209,5 +209,20 @@
   <ItemGroup>
     <None Include="Resources\icons8-achtung-48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icons8-nachrichten-256.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icons8-thor-256.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icons8-enterprise-ressourcenplanung-96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
